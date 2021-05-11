@@ -1,0 +1,26 @@
+{
+	"name": "react-native-subscription-plan",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"types": "index.d.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://git.codificar.com.br/react-components/react-native-subscription-plan"
+	},
+	"dependencies": {
+		"axios": "^0.19.2"
+	},
+	"peerDependencies": {
+		"react-native": ">=0.62.5"
+	},
+	"author": "Codificar",
+	"bugs": {
+		"url": "https://git.codificar.com.br/react-components/react-native-subscription-plan/issues"
+	},
+	"homepage": "https://git.codificar.com.br/react-components/react-native-subscription-plan#readme"
+}
