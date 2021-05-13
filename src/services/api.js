@@ -98,7 +98,6 @@ export function addCard(
  * @param {string} token
  */
 export function listCards(url, id, token) {
-	console.log(id, token);
 	return axios.get(url + constants.LIST_CARD, {
 		params: {id, token},
 	});

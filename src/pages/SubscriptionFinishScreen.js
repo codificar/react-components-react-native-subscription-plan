@@ -72,7 +72,6 @@ export default class SubscriptionFinishScreen extends Component {
 		listCards(this.route, this.provider.id, this.provider.token)
 			.then((response) => {
 				const {data} = response;
-				console.log(data);
 				if (data.success) {
 					const cards = data.cards;
 					this.setState({

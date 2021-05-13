@@ -10,5 +10,5 @@ export const DETAILS_SUBSCRIPTION =
 	LIBS_URL + HOST_PROVIDER_URL + '/subscription_details';
 export const CANCEL_SUBSCRIPTION =
 	LIBS_URL + HOST_PROVIDER_URL + '/cancel_subscription';
-export const ADD_CARD = HOST_PROVIDER_URL + '/add_card';
+export const ADD_CARD = '/api/add_card';
 export const LIST_CARD = '/api/list_provider_cards';
