@@ -1,7 +1,7 @@
 {
 	"configuration": "configuration",
   "selected": "selected.",
-  "paymentForms": "Payment forms",
+  "subscriptions": "Subscriptions",
   "byService": "By service (fixed or percentage)",
   "bySubscription": "By subscription",
   "selectedAPlan": "Choose a plan",

@@ -1,7 +1,7 @@
 {
 	"configuration": "configuração",
     "selected": "escolhido.",
-    "paymentForms": "Formas de Pagamento",
+    "subscriptions": "Assinaturas",
     "byService": "Por serviço (fixo ou percentual)",
     "bySubscription": "Por assinatura",
     "selectedAPlan": "Escolha um plano",
@@ -41,7 +41,7 @@
     "inactive": "Inativo",
     "cancelled": "Cancelado",
     "cancel_alert_title": "Tem certeza que deseja cancelar?",
-    "cancel_alert": "Ao cancelar você perderá todos os benefícios. Uma boa data para cancelar é ",
+    "cancel_alert": "Ao cancelar você perderá todos os benefícios do plano atual. Uma boa data para cancelar é ",
     "no_subscription": "Não possui assinatura...",
 		"yes_tinny": "Sim",
 		"no_tinny": "Não"

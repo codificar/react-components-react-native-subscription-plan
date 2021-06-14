@@ -17,8 +17,7 @@ class ConfigScreen extends Component {
 		this.provider = this.props.navigation.state.params.provider;
 		this.themeColor = this.props.navigation.state.params.themeColor;
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor;
-		console.log(this.themeColor, this.buttonTextColor, this.provider);
-
+		this.activeSubscriptionModule = this.props.navigation.state.params.activeSubscriptionModule;
 	}
 
 	/**
@@ -62,7 +61,7 @@ class ConfigScreen extends Component {
 					</View>
 
 					{
-						/*this.props.settings.is_register_payment_screen_enabled &&*/
+						this.props.navigation.state.params.activeSubscriptionModule &&
 						<>
 							<TouchableOpacity
 								onPress={() =>
@@ -83,7 +82,7 @@ class ConfigScreen extends Component {
 										color={'#000'}
 										style={styles.shield}
 									/>
-									<Text style={{color: '#000'}}>{strings.paymentForms}</Text>
+									<Text style={{color: '#000'}}>{strings.subscriptions}</Text>
 								</View>
 								<Icon name="chevron-right" size={28} color={'#000'} />
 							</TouchableOpacity>

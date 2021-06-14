@@ -5,6 +5,7 @@ export const LOADING_COLOR = '#436988';
 export const LIBS_URL = '/api/libs';
 export const HOST_PROVIDER_URL = '/provider';
 export const GET_PLANS = LIBS_URL + HOST_PROVIDER_URL + '/plans';
+export const GET_REQUIRED_PLANS = LIBS_URL + HOST_PROVIDER_URL + '/plans/required_plans';
 export const NEW_SUBSCRIPTION = LIBS_URL + HOST_PROVIDER_URL + '/update_plan';
 export const DETAILS_SUBSCRIPTION =
 	LIBS_URL + HOST_PROVIDER_URL + '/subscription_details';

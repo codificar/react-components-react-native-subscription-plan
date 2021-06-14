@@ -116,3 +116,20 @@ export function cancelSubscription(url, id, token, subscription_id) {
 		subscription_id,
 	});
 }
+
+/**
+ * Cancel a subscription
+ * @param {number} lat
+ * @param {number} lng
+ */
+export function plataformRequireSubscription(url,  id, token, lat, lng) {
+	console.log(url + constants.GET_REQUIRED_PLANS,  id, token, lat, lng);
+	return axios.get(url + constants.GET_REQUIRED_PLANS, {
+		params: {
+			id,
+			token,
+			lat,
+			lng
+		}
+	});
+}
