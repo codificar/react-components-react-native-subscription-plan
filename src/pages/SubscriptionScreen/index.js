@@ -26,7 +26,6 @@ export default class SubscriptionScreen extends Component {
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor ?? '#FFF';
 
 		this.state = {
-			checkedPaymentForm: !this.props.navigation.state.params.is_change,
 			checkedPaymentType: 'billet',
 			selectedPlan: 0,
 			plans: [],
@@ -64,16 +63,6 @@ export default class SubscriptionScreen extends Component {
 			.catch((error) => {
 				console.log('getAvailablePlans', error);
 			});
-	}
-
-	/**
-	 * Toggle payment form check box
-	 * @return {void}
-	 */
-	handleTogglePaymentForm() {
-		this.setState({
-			checkedPaymentForm: !this.state.checkedPaymentForm,
-		});
 	}
 
 	/**
@@ -130,86 +119,61 @@ export default class SubscriptionScreen extends Component {
 					back={true}
 					handlePress={() => this.props.navigation.goBack()}
 				/>
-				<TitleHeader text={strings.paymentForm} align="flex-start" />
+				<TitleHeader text={strings.selectedAPlan} align="flex-start" />
 
 				<View style={styles.containerCheckBox}>
-					<View>
-						<CheckBox
-							title={strings.byService}
-							checked={this.state.checkedPaymentForm}
-							checkedIcon="dot-circle-o"
-							uncheckedIcon="circle-o"
-							onPress={() => this.handleTogglePaymentForm()}
-							containerStyle={styles.checkBoxStyle}
-						/>
-						<CheckBox
-							title={strings.bySubscription}
-							checked={!this.state.checkedPaymentForm}
-							checkedIcon="dot-circle-o"
-							uncheckedIcon="circle-o"
-							onPress={() => this.handleTogglePaymentForm()}
-							containerStyle={styles.checkBoxStyle}
-						/>
-					</View>
+					<View
+						style={{
+							flex: 1,
+							justifyContent: 'space-between',
+						}}>
+						<View style={styles.containerList}>
+							<FlatList
+								data={this.state.plans}
+								keyExtractor={(x, i) => i.toString()}
+								renderItem={({item}) => (
+									<TouchableOpacity
+										style={styles.listPlanItem}
+										onPress={() => this.handleSelectPlan(item)}>
+										<Text>{item.name}</Text>
+										{this.state.selectedPlan.id == item.id && (
+											<View
+												style={[
+													styles.iconCheck,
+													{backgroundColor: this.themeColor},
+												]}>
+												<IconCheck name="check" size={18} color="#ffffff" />
+											</View>
+										)}
+									</TouchableOpacity>
+								)}
+							/>
+						</View>
 
-					{!this.state.checkedPaymentForm && (
-						<View
-							style={{
-								flex: 1,
-								justifyContent: 'space-between',
-							}}>
-							<View style={styles.containerList}>
-								<Text style={styles.listPlanTitle}>
-									{strings.selectedAPlan}
+						<View>
+							<View>
+								<Text style={styles.selectPayment}>
+									{strings.paymentType}
 								</Text>
-
-								<FlatList
-									data={this.state.plans}
-									keyExtractor={(x, i) => i.toString()}
-									renderItem={({item}) => (
-										<TouchableOpacity
-											style={styles.listPlanItem}
-											onPress={() => this.handleSelectPlan(item)}>
-											<Text>{item.name}</Text>
-											{this.state.selectedPlan.id == item.id && (
-												<View
-													style={[
-														styles.iconCheck,
-														{backgroundColor: this.themeColor},
-													]}>
-													<IconCheck name="check" size={18} color="#ffffff" />
-												</View>
-											)}
-										</TouchableOpacity>
-									)}
+								<CheckBox
+									title={strings.billet}
+									checked={this.state.checkedPaymentType == 'billet'}
+									checkedIcon="dot-circle-o"
+									uncheckedIcon="circle-o"
+									onPress={() => this.handleTogglePaymentType('billet')}
+									containerStyle={styles.checkBoxStyle}
+								/>
+								<CheckBox
+									title={strings.card}
+									checked={this.state.checkedPaymentType == 'card'}
+									checkedIcon="dot-circle-o"
+									uncheckedIcon="circle-o"
+									onPress={() => this.handleTogglePaymentType('card')}
+									containerStyle={styles.checkBoxStyle}
 								/>
 							</View>
-
-							<View>
-								<View>
-									<Text style={styles.selectPayment}>
-										{strings.paymentType}
-									</Text>
-									<CheckBox
-										title={strings.billet}
-										checked={this.state.checkedPaymentType == 'billet'}
-										checkedIcon="dot-circle-o"
-										uncheckedIcon="circle-o"
-										onPress={() => this.handleTogglePaymentType('billet')}
-										containerStyle={styles.checkBoxStyle}
-									/>
-									<CheckBox
-										title={strings.card}
-										checked={this.state.checkedPaymentType == 'card'}
-										checkedIcon="dot-circle-o"
-										uncheckedIcon="circle-o"
-										onPress={() => this.handleTogglePaymentType('card')}
-										containerStyle={styles.checkBoxStyle}
-									/>
-								</View>
-							</View>
 						</View>
-					)}
+					</View>
 
 					<View style={styles.nextButton}>
 						<TouchableOpacity

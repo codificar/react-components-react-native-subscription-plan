@@ -89,17 +89,8 @@ export default class SubscriptionDetailsScreen extends Component {
 			this.provider.token,
 			this.state.signature.id,
 		)
-			.then((response) => {
-				const {data} = response;
-
-				let signature = this.state.signature;
-
-				if (parse.isSuccess(data)) {
-					signature.status = strings.cancelled;
-					this.setState({
-						signature: signature,
-					});
-				}
+			.then(() => {
+				this.getSubscriptionDetails()
 			})
 			.catch((error) => {
 				console.log(error);
@@ -171,11 +162,12 @@ export default class SubscriptionDetailsScreen extends Component {
 							)}
 
 							<View style={styles.optionsView}>
-								<TouchableOpacity
-									onPress={() => this.alertCancelSubscription()}>
-									<Text style={styles.fontBold}>{strings.cancel}</Text>
-								</TouchableOpacity>
-
+								{!this.state.signature.is_cancelled &&
+									<TouchableOpacity
+										onPress={() => this.alertCancelSubscription()}>
+										<Text style={styles.fontBold}>{strings.cancel}</Text>
+									</TouchableOpacity>
+								}
 								<TouchableOpacity onPress={() => this.navigate()}>
 									<Text style={styles.fontBold}>{strings.change}</Text>
 								</TouchableOpacity>
