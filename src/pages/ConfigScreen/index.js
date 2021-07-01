@@ -104,7 +104,7 @@ class ConfigScreen extends Component {
 						this.activeSubscriptionModule &&
 						<>
 						{
-							this.state.signature && !this.state.signature.is_cancelled ?
+							(this.state.signature?.id && !this.state.signature?.is_cancelled) ?
 							(
 								<TouchableOpacity
 								onPress={() =>
