@@ -44,5 +44,11 @@
     "cancel_alert": "Ao cancelar você perderá todos os benefícios do plano atual. Uma boa data para cancelar é ",
     "no_subscription": "Não possui assinatura...",
 		"yes_tinny": "Sim",
-		"no_tinny": "Não"
+		"no_tinny": "Não",
+    "plan_permission":"Plano não pode ser cancelado dentro de seu período",
+    "permission":"Permissão",
+    "ok":"OK",
+    "cancelled_with_success":"Plano cancelado com sucesso",
+    "error":"Erro",
+    "payment_method":"Por favor, retorne e selecione um mêtodo de pagamento para prosseguir"
   }

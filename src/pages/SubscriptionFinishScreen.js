@@ -145,6 +145,20 @@ export default class SubscriptionFinishScreen extends Component {
 						{cancelable: false},
 					);
 				}
+				if(data.error == "O campo payment id é necessário quando charge type é card."){
+					Alert.alert(
+						strings.error,
+						strings.payment_method,
+						[
+							{
+								text: strings.ok,
+								onPress: () => function () {},
+								style: 'cancel',
+							},
+						],
+						{cancelable: true},
+					);
+				}
 			})
 			.catch((error) => {
 				this.setState({

@@ -89,7 +89,34 @@ export default class SubscriptionDetailsScreen extends Component {
 			this.provider.token,
 			this.state.signature.id,
 		)
-			.then(() => {
+			.then((response) => {
+				if(response.data.success === false){
+					Alert.alert(
+						strings.permission,
+						strings.plan_permission,
+						[
+							{
+								text: strings.ok,
+								onPress: () => function () {},
+								style: 'cancel',
+							},
+						],
+						{cancelable: true},
+					);
+				}else{
+					Alert.alert(
+						strings.cancelled,
+						strings.cancelled_with_success,
+						[
+							{
+								text: strings.ok,
+								onPress: () => function () {},
+								style: 'cancel',
+							},
+						],
+						{cancelable: true},
+					);
+				}
 				this.getSubscriptionDetails()
 			})
 			.catch((error) => {

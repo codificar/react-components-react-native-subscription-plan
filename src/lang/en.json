@@ -44,5 +44,11 @@
   "cancel_alert": "When you cancel you will lose all benefits. A good date to cancel is ",
   "no_subscription": "Don't have a signature...",
 	"yes_tinny": "Yes",
-	"no_tinny": "No"
+	"no_tinny": "No",
+  "plan_permission":"Plan cannot be canceled within its period",
+  "permission":"Permission",
+  "ok":"OK",
+  "cancelled_with_success":"Plan canceled successfully",
+  "error":"error",
+  "payment_method":"Please come back and select a payment method to proceed."
 }
