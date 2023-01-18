@@ -50,5 +50,6 @@
   "ok":"OK",
   "cancelled_with_success":"Plan canceled successfully",
   "error":"error",
-  "payment_method":"Please come back and select a payment method to proceed."
+  "payment_method":"Please come back and select a payment method to proceed.",
+  "cardError":"There was a problem with card authentication, please register again"
 }

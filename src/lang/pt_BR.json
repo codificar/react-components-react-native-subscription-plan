@@ -50,5 +50,6 @@
     "ok":"OK",
     "cancelled_with_success":"Plano cancelado com sucesso",
     "error":"Erro",
-    "payment_method":"Por favor, retorne e selecione um mêtodo de pagamento para prosseguir"
+    "payment_method":"Por favor, retorne e selecione um mêtodo de pagamento para prosseguir",
+    "cardError":"Houve um problema com a autenticação do cartão, por favor, cadastre o novamente"
   }

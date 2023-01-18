@@ -159,6 +159,20 @@ export default class SubscriptionFinishScreen extends Component {
 						{cancelable: true},
 					);
 				}
+				if(data.error){
+					Alert.alert(
+						strings.error,
+						strings.cardError,
+						[
+							{
+								text: strings.ok,
+								onPress: () => function () {},
+								style: 'cancel',
+							},
+						],
+						{cancelable: true},
+					);
+				}
 			})
 			.catch((error) => {
 				this.setState({
