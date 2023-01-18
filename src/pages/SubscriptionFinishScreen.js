@@ -239,7 +239,13 @@ export default class SubscriptionFinishScreen extends Component {
 								{
 									<TouchableOpacity
 										onPress={() =>
-											this.props.navigation.navigate('AddCardScreen')
+											this.props.navigation.navigate('AddCardScreenLib',{
+												token:this.provider.token,
+												type:"provider",
+												id:this.provider.id,
+												color:this.themeColor,
+												appUrl:this.route
+											})
 										}>
 										<Text
 											style={[styles.addCard, {color: this.themeColor}]}>
