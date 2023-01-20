@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import TitleHeader from '../components/TitleHeader';
 import Toolbar from '../components/Toolbar';
 import styles from './SubscriptionScreen/SubscriptionScreenStyles';
@@ -7,7 +7,7 @@ import styles from './SubscriptionScreen/SubscriptionScreenStyles';
 import Icon from 'react-native-vector-icons/Feather';
 import strings from '../lang/strings';
 
-import {subscriptionDetails, cancelSubscription} from '../services/api';
+import { subscriptionDetails, cancelSubscription } from '../services/api';
 
 import * as parse from '../Util/Parse';
 import {
@@ -44,7 +44,7 @@ export default class SubscriptionDetailsScreen extends Component {
 	getSubscriptionDetails() {
 		subscriptionDetails(this.route, this.provider.id, this.provider.token)
 			.then((response) => {
-				const {data} = response;
+				const { data } = response;
 
 				if (data.is_cancelled == 1) {
 					data.status = strings.cancelled;
@@ -70,7 +70,7 @@ export default class SubscriptionDetailsScreen extends Component {
 			[
 				{
 					text: strings.no_tinny,
-					onPress: () => function () {},
+					onPress: () => function () { },
 					style: 'cancel',
 				},
 				{
@@ -78,7 +78,7 @@ export default class SubscriptionDetailsScreen extends Component {
 					onPress: () => this.cancelProviderSubscription(),
 				},
 			],
-			{cancelable: true},
+			{ cancelable: true },
 		);
 	}
 
@@ -90,31 +90,31 @@ export default class SubscriptionDetailsScreen extends Component {
 			this.state.signature.id,
 		)
 			.then((response) => {
-				if(response.data.success === false){
+				if (response.data.success === false) {
 					Alert.alert(
 						strings.permission,
 						strings.plan_permission,
 						[
 							{
 								text: strings.ok,
-								onPress: () => function () {},
+								onPress: () => function () { },
 								style: 'cancel',
 							},
 						],
-						{cancelable: true},
+						{ cancelable: true },
 					);
-				}else{
+				} else {
 					Alert.alert(
 						strings.cancelled,
 						strings.cancelled_with_success,
 						[
 							{
 								text: strings.ok,
-								onPress: () => function () {},
+								onPress: () => function () { },
 								style: 'cancel',
 							},
 						],
-						{cancelable: true},
+						{ cancelable: true },
 					);
 				}
 				this.getSubscriptionDetails()

@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import TitleHeader from '../../components/TitleHeader';
 import Toolbar from '../../components/Toolbar';
 import strings from '../../lang/strings';
 import styles from './SubscriptionScreenStyles';
 import IconCheck from 'react-native-vector-icons/Feather';
-import {getAvailablePlans} from '../../services/api';
+import { getAvailablePlans } from '../../services/api';
 
 import {
 	View,
@@ -12,8 +12,9 @@ import {
 	BackHandler,
 	FlatList,
 	TouchableOpacity,
+	Alert,
 } from 'react-native';
-import {CheckBox} from 'react-native-elements';
+import { CheckBox } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import * as parse from '../../Util/Parse';
 
@@ -53,7 +54,7 @@ export default class SubscriptionScreen extends Component {
 	getPlans() {
 		getAvailablePlans(this.route, this.provider.id, this.provider.token)
 			.then((response) => {
-				const {data} = response;
+				const { data } = response;
 				const plans = data.plans;
 				this.setState({
 					plans: plans,
@@ -91,7 +92,7 @@ export default class SubscriptionScreen extends Component {
 	 * @return {void}
 	 */
 	handleConfirmButton() {
-		const {navigate} = this.props.navigation;
+		const { navigate } = this.props.navigation;
 		if (!this.state.checkedPaymentForm) {
 			navigate('SubscriptionFinishScreen', {
 				provider: this.provider,
@@ -128,26 +129,37 @@ export default class SubscriptionScreen extends Component {
 							justifyContent: 'space-between',
 						}}>
 						<View style={styles.containerList}>
-							<FlatList
-								data={this.state.plans}
-								keyExtractor={(x, i) => i.toString()}
-								renderItem={({item}) => (
-									<TouchableOpacity
-										style={styles.listPlanItem}
-										onPress={() => this.handleSelectPlan(item)}>
-										<Text>{item.name}</Text>
-										{this.state.selectedPlan.id == item.id && (
-											<View
-												style={[
-													styles.iconCheck,
-													{backgroundColor: this.themeColor},
-												]}>
-												<IconCheck name="check" size={18} color="#ffffff" />
-											</View>
-										)}
-									</TouchableOpacity>
-								)}
-							/>
+							{(this.state.plans && this.state.plans.length > 0) ? (
+								<FlatList
+									data={this.state.plans}
+									keyExtractor={(x, i) => i.toString()}
+									renderItem={({ item }) => (
+										<TouchableOpacity
+											style={styles.listPlanItem}
+											onPress={() => this.handleSelectPlan(item)}>
+											<Text>{item.name}</Text>
+											{this.state.selectedPlan.id == item.id && (
+												<View
+													style={[
+														styles.iconCheck,
+														{ backgroundColor: this.themeColor },
+													]}>
+													<IconCheck name="check" size={18} color="#ffffff" />
+												</View>
+											)}
+										</TouchableOpacity>
+									)}
+								/>
+							) : (
+								<>
+									<View>
+										<Text style={styles.selectPayment}>
+											{strings.paymentType}
+										</Text>
+									</View>
+								</>
+							)
+							}
 						</View>
 
 						<View>
@@ -177,15 +189,26 @@ export default class SubscriptionScreen extends Component {
 
 					<View style={styles.nextButton}>
 						<TouchableOpacity
-							style={[styles.nextBtn, {backgroundColor: this.themeColor}]}
-							onPress={() => this.handleConfirmButton()}>
-							<Text style={[styles.nextTxt, {color: this.buttonTextColor}]}>
+							style={[styles.nextBtn, { backgroundColor: this.themeColor }]}
+							onPress={() => (this.state.plans && this.state.plans.length > 0) ?
+								(this.handleConfirmButton()) : (
+									Alert.alert(
+										strings("register_step5.maxSize"),
+										strings("register_step5.msg_max_size"),
+										[{
+											text: strings("register.close")
+										}],
+										{ cancelable: true }
+									)
+								)
+							}>
+							<Text style={[styles.nextTxt, { color: this.buttonTextColor }]}>
 								{strings.next}
 							</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
-			</View>
+			</View >
 		);
 	}
 }

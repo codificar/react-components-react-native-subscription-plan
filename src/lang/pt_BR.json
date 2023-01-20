@@ -1,5 +1,5 @@
 {
-	"configuration": "configuração",
+	"configuration": "Configuração",
     "selected": "escolhido.",
     "subscriptions": "Assinaturas",
     "byService": "Por serviço (fixo ou percentual)",
@@ -51,5 +51,6 @@
     "cancelled_with_success":"Plano cancelado com sucesso",
     "error":"Erro",
     "payment_method":"Por favor, retorne e selecione um mêtodo de pagamento para prosseguir",
-    "cardError":"Houve um problema com a autenticação do cartão, por favor, cadastre o novamente"
+    "cardError":"Houve um problema com a autenticação do cartão, por favor, cadastre o novamente",
+    "noPlan":"Não há outras opções de plano"
   }
