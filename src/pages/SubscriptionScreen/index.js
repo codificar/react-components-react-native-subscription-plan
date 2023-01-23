@@ -58,10 +58,10 @@ export default class SubscriptionScreen extends Component {
 				const { data } = response;
 				const plans = data.plans;
 				this.setState({
+					verifyButton: plans.length > 0 ?  1 : 0,
 					plans: plans,
 					selectedPlan: plans.length > 0 ? plans[0] : {},
 				});
-				plans.length > 0 ? this.state.verifyButton = 1 : this.state.verifyButton = 0;
 			})
 			.catch((error) => {
 				console.log('getAvailablePlans', error);
@@ -178,6 +178,7 @@ export default class SubscriptionScreen extends Component {
 						</View>
 
 						<View>
+							{(this.state.verifyButton == 1 ) ? (
 							<View>
 								<Text style={styles.selectPayment}>
 									{strings.paymentType}
@@ -199,6 +200,7 @@ export default class SubscriptionScreen extends Component {
 									containerStyle={styles.checkBoxStyle}
 								/>
 							</View>
+							) : null }
 						</View>
 					</View>
 
