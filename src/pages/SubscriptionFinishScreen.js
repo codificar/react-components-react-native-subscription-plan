@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import TitleHeader from '../components/TitleHeader';
 import Toolbar from '../components/Toolbar';
 import Loader from '../components/Loader';
@@ -17,7 +17,7 @@ import {
 	Image,
 } from 'react-native';
 
-import {listCards, newSubscriptionPlan} from '../services/api';
+import { listCards, newSubscriptionPlan } from '../services/api';
 
 export default class SubscriptionFinishScreen extends Component {
 	constructor(props) {
@@ -71,7 +71,7 @@ export default class SubscriptionFinishScreen extends Component {
 	listProviderCards() {
 		listCards(this.route, this.provider.id, this.provider.token)
 			.then((response) => {
-				const {data} = response;
+				const { data } = response;
 				if (data.success) {
 					const cards = data.cards;
 					this.setState({
@@ -100,7 +100,7 @@ export default class SubscriptionFinishScreen extends Component {
 	 * @return {void}
 	 */
 	handleSuccessButton() {
-		const {navigate} = this.props.navigation;
+		const { navigate } = this.props.navigation;
 
 		if (this.state.screen == 'RegisterDocumentsStepScreen') {
 			navigate('RegisterFinishedScreen');
@@ -131,7 +131,7 @@ export default class SubscriptionFinishScreen extends Component {
 					isLoading: false,
 				});
 
-				const {data} = response;
+				const { data } = response;
 				if (parse.isSuccess(data)) {
 					Alert.alert(
 						'',
@@ -142,35 +142,35 @@ export default class SubscriptionFinishScreen extends Component {
 								onPress: () => this.handleSuccessButton(),
 							},
 						],
-						{cancelable: false},
+						{ cancelable: false },
 					);
 				}
-				if(data.error == "O campo payment id é necessário quando charge type é card."){
+				if (data.error == "O campo payment id é necessário quando charge type é card.") {
 					Alert.alert(
 						strings.error,
 						strings.payment_method,
 						[
 							{
 								text: strings.ok,
-								onPress: () => function () {},
+								onPress: () => function () { },
 								style: 'cancel',
 							},
 						],
-						{cancelable: true},
+						{ cancelable: true },
 					);
 				}
-				if(data.error){
+				if (data.error) {
 					Alert.alert(
 						strings.error,
 						strings.cardError,
 						[
 							{
 								text: strings.ok,
-								onPress: () => function () {},
+								onPress: () => function () { },
 								style: 'cancel',
 							},
 						],
-						{cancelable: true},
+						{ cancelable: true },
 					);
 				}
 			})
@@ -193,7 +193,7 @@ export default class SubscriptionFinishScreen extends Component {
 			[
 				{
 					text: strings.no_tinny,
-					onPress: () => function () {},
+					onPress: () => function () { },
 					style: 'cancel',
 				},
 				{
@@ -201,7 +201,7 @@ export default class SubscriptionFinishScreen extends Component {
 					onPress: () => this.createPlan(),
 				},
 			],
-			{cancelable: true},
+			{ cancelable: true },
 		);
 	}
 
@@ -253,41 +253,41 @@ export default class SubscriptionFinishScreen extends Component {
 								{
 									<TouchableOpacity
 										onPress={() =>
-											this.props.navigation.navigate('AddCardScreenLib',{
-												token:this.provider.token,
-												type:"provider",
-												id:this.provider.id,
-												color:this.themeColor,
-												appUrl:this.route
+											this.props.navigation.navigate('AddCardScreenLib', {
+												token: this.provider.token,
+												type: "provider",
+												id: this.provider.id,
+												color: this.themeColor,
+												appUrl: this.route
 											})
 										}>
 										<Text
-											style={[styles.addCard, {color: this.themeColor}]}>
+											style={[styles.addCard, { color: this.themeColor }]}>
 											{strings.addCard}
 										</Text>
 									</TouchableOpacity>
 								}
 								<FlatList
-									style={{marginBottom: 30}}
+									style={{ marginBottom: 30 }}
 									data={this.state.cards}
-									renderItem={({item}) => (
+									renderItem={({ item }) => (
 										<TouchableOpacity
 											style={styles.listTypes}
 											onPress={() => this.onSelectedCard(item.id)}>
-											<View style={{flex: 0.2}}>
+											<View style={{ flex: 0.2 }}>
 												<Image
 													source={this.arrayIconsType[item.card_type]}
 													style={styles.cardIcon}
 												/>
 											</View>
-											<View style={{flex: 0.7}}>
+											<View style={{ flex: 0.7 }}>
 												<Text>**** **** **** {item.last_four}</Text>
 											</View>
 											{this.state.selectedCard == item.id && (
 												<View
 													style={[
 														styles.iconCheck,
-														{backgroundColor: this.themeColor},
+														{ backgroundColor: this.themeColor },
 													]}>
 													<IconCheck name="check" size={18} color="#ffffff" />
 												</View>
@@ -302,9 +302,9 @@ export default class SubscriptionFinishScreen extends Component {
 
 					<View style={styles.nextButton}>
 						<TouchableOpacity
-							style={[styles.confirmButton, {backgroundColor: this.themeColor}]}
+							style={[styles.confirmButton, { backgroundColor: this.themeColor }]}
 							onPress={() => this.alertConfirmSubscription()}>
-							<Text style={[styles.nextTxt, {color: this.buttonTextColor}]}>
+							<Text style={[styles.nextTxt, { color: this.buttonTextColor }]}>
 								{strings.confirm}
 							</Text>
 						</TouchableOpacity>
