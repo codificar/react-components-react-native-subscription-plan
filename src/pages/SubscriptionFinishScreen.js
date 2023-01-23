@@ -15,6 +15,7 @@ import {
 	TouchableOpacity,
 	FlatList,
 	Image,
+	ScrollView
 } from 'react-native';
 
 import { listCards, newSubscriptionPlan } from '../services/api';
@@ -207,110 +208,112 @@ export default class SubscriptionFinishScreen extends Component {
 
 	render() {
 		return (
-			<View style={styles.parentContainer}>
-				<Loader
-					loading={this.state.isLoading}
-					message={this.state.loading_message}
-				/>
-				<Toolbar
-					back={true}
-					handlePress={() => this.props.navigation.goBack()}
-				/>
-				<TitleHeader text={strings.checkoutSubscription} align="flex-start" />
+			<ScrollView>
+				<View style={styles.parentContainer}>
+					<Loader
+						loading={this.state.isLoading}
+						message={this.state.loading_message}
+					/>
+					<Toolbar
+						back={true}
+						handlePress={() => this.props.navigation.goBack()}
+					/>
+					<TitleHeader text={strings.checkoutSubscription} align="flex-start" />
 
-				<View style={styles.containerDetails}>
-					<View>
-						<View style={styles.contentDetails}>
-							<Text style={styles.planName}>{this.state.item.name}</Text>
+					<View style={styles.containerDetails}>
+						<View>
+							<View style={styles.contentDetails}>
+								<Text style={styles.planName}>{this.state.item.name}</Text>
 
-							<View style={styles.textContainer}>
-								<Text style={styles.planDetails}>
-									{strings.period} {'\n'}
-									<Text style={styles.fontBold}>
-										{this.state.item.period} {strings.days}
+								<View style={styles.textContainer}>
+									<Text style={styles.planDetails}>
+										{strings.period} {'\n'}
+										<Text style={styles.fontBold}>
+											{this.state.item.period} {strings.days}
+										</Text>
 									</Text>
-								</Text>
 
+									<Text style={styles.planDetails}>
+										{strings.value} {'\n'}
+										<Text style={styles.fontBold}>
+											{this.state.item.plan_price}
+										</Text>
+									</Text>
+								</View>
 								<Text style={styles.planDetails}>
-									{strings.value} {'\n'}
+									{strings.paymentForm} {'\n'}
 									<Text style={styles.fontBold}>
-										{this.state.item.plan_price}
+										{this.state.charge_type == 'billet'
+											? 'Boleto'
+											: 'Cartão de crédito'}
 									</Text>
 								</Text>
 							</View>
-							<Text style={styles.planDetails}>
-								{strings.paymentForm} {'\n'}
-								<Text style={styles.fontBold}>
-									{this.state.charge_type == 'billet'
-										? 'Boleto'
-										: 'Cartão de crédito'}
-								</Text>
-							</Text>
+
+							{this.state.charge_type != 'billet' && (
+								<View>
+									{
+										<TouchableOpacity
+											onPress={() =>
+												this.props.navigation.navigate('AddCardScreenLib', {
+													token: this.provider.token,
+													type: "provider",
+													id: this.provider.id,
+													color: this.themeColor,
+													appUrl: this.route
+												})
+											}>
+											<Text
+												style={[styles.addCard, { color: this.themeColor }]}>
+												{strings.addCard}
+											</Text>
+										</TouchableOpacity>
+									}
+									<FlatList
+										style={{ marginBottom: 30 }}
+										data={this.state.cards}
+										renderItem={({ item }) => (
+											<TouchableOpacity
+												style={styles.listTypes}
+												onPress={() => this.onSelectedCard(item.id)}>
+												<View style={{ flex: 0.2 }}>
+													<Image
+														source={this.arrayIconsType[item.card_type]}
+														style={styles.cardIcon}
+													/>
+												</View>
+												<View style={{ flex: 0.7 }}>
+													<Text>**** **** **** {item.last_four}</Text>
+												</View>
+												{this.state.selectedCard == item.id && (
+													<View
+														style={[
+															styles.iconCheck,
+															{ backgroundColor: this.themeColor },
+														]}>
+														<IconCheck name="check" size={18} color="#ffffff" />
+													</View>
+												)}
+											</TouchableOpacity>
+										)}
+										keyExtractor={(item, index) => `${index}`}
+									/>
+								</View>
+							)}
 						</View>
 
-						{this.state.charge_type != 'billet' && (
-							<View>
-								{
-									<TouchableOpacity
-										onPress={() =>
-											this.props.navigation.navigate('AddCardScreenLib', {
-												token: this.provider.token,
-												type: "provider",
-												id: this.provider.id,
-												color: this.themeColor,
-												appUrl: this.route
-											})
-										}>
-										<Text
-											style={[styles.addCard, { color: this.themeColor }]}>
-											{strings.addCard}
-										</Text>
-									</TouchableOpacity>
-								}
-								<FlatList
-									style={{ marginBottom: 30 }}
-									data={this.state.cards}
-									renderItem={({ item }) => (
-										<TouchableOpacity
-											style={styles.listTypes}
-											onPress={() => this.onSelectedCard(item.id)}>
-											<View style={{ flex: 0.2 }}>
-												<Image
-													source={this.arrayIconsType[item.card_type]}
-													style={styles.cardIcon}
-												/>
-											</View>
-											<View style={{ flex: 0.7 }}>
-												<Text>**** **** **** {item.last_four}</Text>
-											</View>
-											{this.state.selectedCard == item.id && (
-												<View
-													style={[
-														styles.iconCheck,
-														{ backgroundColor: this.themeColor },
-													]}>
-													<IconCheck name="check" size={18} color="#ffffff" />
-												</View>
-											)}
-										</TouchableOpacity>
-									)}
-									keyExtractor={(item, index) => `${index}`}
-								/>
-							</View>
-						)}
-					</View>
-
-					<View style={styles.nextButton}>
-						<TouchableOpacity
-							style={[styles.confirmButton, { backgroundColor: this.themeColor }]}
-							onPress={() => this.alertConfirmSubscription()}>
-							<Text style={[styles.nextTxt, { color: this.buttonTextColor }]}>
-								{strings.confirm}
-							</Text>
-						</TouchableOpacity>
+						<View style={styles.nextButton}>
+							<TouchableOpacity
+								style={[styles.confirmButton, { backgroundColor: this.themeColor }]}
+								onPress={() => this.alertConfirmSubscription()}>
+								<Text style={[styles.nextTxt, { color: this.buttonTextColor }]}>
+									{strings.confirm}
+								</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
 				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }
