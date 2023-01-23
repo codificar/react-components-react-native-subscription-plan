@@ -52,5 +52,6 @@
   "error":"error",
   "payment_method":"Please come back and select a payment method to proceed.",
   "cardError":"There was a problem with card authentication, please register again",
-  "noPlan":"There is no other plan options"
+  "noPlan":"There is no other plan options",
+  "noPlanAvailable":"It is only possible to proceed with the available plans"
 }

@@ -32,6 +32,7 @@ export default class SubscriptionScreen extends Component {
 			plans: [],
 			screen: this.props.navigation.state.params.screen,
 			is_change: this.props.navigation.state.params.is_change,
+			verifyButton: 1
 		};
 	}
 
@@ -60,6 +61,7 @@ export default class SubscriptionScreen extends Component {
 					plans: plans,
 					selectedPlan: plans.length > 0 ? plans[0] : {},
 				});
+				plans.length > 0 ? this.state.verifyButton = 1 : this.state.verifyButton = 0;
 			})
 			.catch((error) => {
 				console.log('getAvailablePlans', error);
@@ -93,7 +95,20 @@ export default class SubscriptionScreen extends Component {
 	 */
 	handleConfirmButton() {
 		const { navigate } = this.props.navigation;
-		if (!this.state.checkedPaymentForm) {
+		if(this.state.verifyButton == 0){
+			Alert.alert(
+				strings.error,
+				strings.noPlanAvailable,
+				[
+					{
+						text: strings.ok,
+						onPress: () => function () { },
+						style: 'cancel',
+					},
+				],
+				{ cancelable: true },
+			);
+		}else if (!this.state.checkedPaymentForm) {
 			navigate('SubscriptionFinishScreen', {
 				provider: this.provider,
 				route: this.route,
@@ -129,7 +144,7 @@ export default class SubscriptionScreen extends Component {
 							justifyContent: 'space-between',
 						}}>
 						<View style={styles.containerList}>
-							{(this.state.plans && this.state.plans.length > 0) ? (
+							{(this.state.verifyButton == 1 ) ? (
 								<FlatList
 									data={this.state.plans}
 									keyExtractor={(x, i) => i.toString()}
@@ -154,7 +169,7 @@ export default class SubscriptionScreen extends Component {
 								<>
 									<View>
 										<Text style={styles.selectPayment}>
-											{strings.paymentType}
+											{strings.noPlan}
 										</Text>
 									</View>
 								</>
@@ -190,18 +205,7 @@ export default class SubscriptionScreen extends Component {
 					<View style={styles.nextButton}>
 						<TouchableOpacity
 							style={[styles.nextBtn, { backgroundColor: this.themeColor }]}
-							onPress={() => (this.state.plans && this.state.plans.length > 0) ?
-								(this.handleConfirmButton()) : (
-									Alert.alert(
-										strings("register_step5.maxSize"),
-										strings("register_step5.msg_max_size"),
-										[{
-											text: strings("register.close")
-										}],
-										{ cancelable: true }
-									)
-								)
-							}>
+							onPress={() => this.handleConfirmButton()}>
 							<Text style={[styles.nextTxt, { color: this.buttonTextColor }]}>
 								{strings.next}
 							</Text>
