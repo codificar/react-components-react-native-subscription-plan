@@ -20,7 +20,6 @@ import {
 } from 'react-native';
 
 import { listCards, newSubscriptionPlan } from '../services/api';
-import ThemedListItem from 'react-native-elements/dist/list/ListItem';
 
 export default class SubscriptionFinishScreen extends Component {
 	constructor(props) {
@@ -29,16 +28,18 @@ export default class SubscriptionFinishScreen extends Component {
 		this.route = this.props.navigation.state.params.route;
 		this.themeColor = this.props.navigation.state.params.themeColor;
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor;
+		this.routeAPI = this.props.navigation.state.params.routeAPI || ROUTE_API;
+		this.routeBack = this.props.navigation.state.params.routeBack || 'ConfigScreen';
 
 		this.arrayIconsType = {};
-		this.arrayIconsType.visa = images.icon_ub_creditcard_visa;
-		this.arrayIconsType.mastercard = images.icon_ub_creditcard_mastercard;
-		this.arrayIconsType.master = images.icon_ub_creditcard_mastercard;
-		this.arrayIconsType.amex = images.icon_ub_creditcard_amex;
-		this.arrayIconsType.diners = images.icon_ub_creditcard_diners;
-		this.arrayIconsType.discover = images.icon_ub_creditcard_discover;
-		this.arrayIconsType.jcb = images.icon_ub_creditcard_jcb;
-		this.arrayIconsType.terracard = images.terra_card;
+		this.arrayIconsType['VISA'] = images.icon_ub_creditcard_visa;
+		this.arrayIconsType['MASTERCARD'] = images.icon_ub_creditcard_mastercard;
+		this.arrayIconsType['MASTER'] = images.icon_ub_creditcard_mastercard;
+		this.arrayIconsType['AMEX'] = images.icon_ub_creditcard_amex;
+		this.arrayIconsType['DINERS'] = images.icon_ub_creditcard_diners;
+		this.arrayIconsType['DISCOVER'] = images.icon_ub_creditcard_discover;
+		this.arrayIconsType['JCB'] = images.icon_ub_creditcard_jcb;
+		this.arrayIconsType['TERRACARD'] = images.terra_card;
 
 		this.state = {
 			isLoading: false,
@@ -74,7 +75,7 @@ export default class SubscriptionFinishScreen extends Component {
 	 */
 	listProviderCards() {
 		this.setState({isLoadingCards: true});
-		listCards(this.route, this.provider.id, this.provider.token)
+		listCards(this.route, this.provider.id, this.provider.token, this.routeAPI)
 			.then((response) => {
 				const { data } = response;
 				if (data.success) {
@@ -112,7 +113,7 @@ export default class SubscriptionFinishScreen extends Component {
 		if (this.state.screen == 'RegisterDocumentsStepScreen') {
 			navigate('RegisterFinishedScreen');
 		} else {
-			navigate('ConfigScreen');
+			navigate('SubscriptionDetailsScreen');
 		}
 	}
 
@@ -152,24 +153,14 @@ export default class SubscriptionFinishScreen extends Component {
 						{ cancelable: false },
 					);
 				}
-				if (data.error == "O campo payment id é necessário quando charge type é card.") {
-					Alert.alert(
-						strings.error,
-						strings.payment_method,
-						[
-							{
-								text: strings.ok,
-								onPress: () => function () { },
-								style: 'cancel',
-							},
-						],
-						{ cancelable: true },
-					);
-				}
 				if (data.error) {
+					let message = strings.cardError;
+					if(data.message) {
+						message = data.message;
+					} 
 					Alert.alert(
 						strings.error,
-						strings.cardError,
+						message,
 						[
 							{
 								text: strings.ok,
@@ -240,7 +231,7 @@ export default class SubscriptionFinishScreen extends Component {
 						styles.iconCheck,
 						{ backgroundColor: this.themeColor },
 					]}>
-					<IconCheck name="check" size={18} color="#ffffff" />
+					<IconCheck name="check" size={15} color="#ffffff" />
 				</View>
 			)}
 		</TouchableOpacity>
@@ -261,7 +252,7 @@ export default class SubscriptionFinishScreen extends Component {
 			style={{ marginBottom: 30 }}
 			data={this.state.cards}
 			ListEmptyComponent={this.renderEmptyCards()}
-			renderItem={({ item }) => ThemedListItem.renderItemCards(item)}
+			renderItem={({ item }) => this.renderItemCards(item)}
 			keyExtractor={(item, index) => `${index}`}/>
 		);
 	}

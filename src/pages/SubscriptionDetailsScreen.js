@@ -19,6 +19,7 @@ import {
 	Alert,
 	ActivityIndicator,
 } from 'react-native';
+import { ROUTE_API } from 'react-native-subscription/src/constants';
 
 export default class SubscriptionDetailsScreen extends Component {
 	constructor(props) {
@@ -28,6 +29,8 @@ export default class SubscriptionDetailsScreen extends Component {
 		this.routeBack = this.props.navigation.state.params.routeBack || 'ConfigScreen';
 		this.themeColor = this.props.navigation.state.params.themeColor ?? '#007bff';
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor ?? '#FFF';
+		this.routeAPI = this.props.navigation.state.params.routeAPI || ROUTE_API;
+		this.isContainerPaymentType = this.props.navigation.state.params.isContainerPaymentType || false;
 
 		if(this.provider._id) {
 			this.provider.id = this.provider._id;
@@ -42,6 +45,9 @@ export default class SubscriptionDetailsScreen extends Component {
 			signature: {},
 			status: '',
 		};
+		this.willFocus = this.props.navigation.addListener('willFocus', () => {
+			this.getSubscriptionDetails();
+		});
 	}
 
 	componentDidMount() {
@@ -50,6 +56,11 @@ export default class SubscriptionDetailsScreen extends Component {
 			return true;
 		});
 		this.getSubscriptionDetails();
+	}
+
+
+    async componentWillUnmount() {
+        this.willFocus.remove();
 	}
 
 	getSubscriptionDetails() {
@@ -146,6 +157,9 @@ export default class SubscriptionDetailsScreen extends Component {
 			is_change: true,
 			themeColor: this.themeColor,
 			buttonTextColor: this.buttonTextColor,
+			routeAPI : this.routeAPI,
+			routeBack: this.routeBack,
+			isContainerPaymentType: this.isContainerPaymentType
 		});
 	}
 
@@ -153,7 +167,7 @@ export default class SubscriptionDetailsScreen extends Component {
 		if(this.state.signature.billet_link) {
             Linking.openURL(this.state.signature.billet_link);
         } else {
-            Alert.alert('Opps', strings('subscription.invalid_link'));
+            Alert.alert('Opps', strings.invalid_link);
         }
 	}
     handleClickPix() {
@@ -230,8 +244,7 @@ export default class SubscriptionDetailsScreen extends Component {
 					</View>
 					
 					{this.state.signature.paid_status == 'waiting_payment' && 
-						!this.state.signature.is_pix &&
-						this.state.signature.billet_link ?
+						!this.state.signature.is_pix ?
 						(<View style={styles.billetView}>
 							<TouchableOpacity
 								onPress={() => this.handleClickBillet()}
@@ -275,7 +288,7 @@ export default class SubscriptionDetailsScreen extends Component {
 			<View style={styles.parentContainer}>
 				<Toolbar
 					back={true}
-					handlePress={() => this.props.navigation.navigate(routeBack)}
+					handlePress={() => this.props.navigation.goBack()}
 				/>
 				<TitleHeader text={strings.subscriptionDetails} align="flex-start" />
 				{this.renderScreen()}

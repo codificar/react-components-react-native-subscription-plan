@@ -18,6 +18,7 @@ import {
 import { CheckBox } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import * as parse from '../../Util/Parse';
+import { ROUTE_API } from 'react-native-subscription/src/constants';
 
 export default class SubscriptionScreen extends Component {
 	constructor(props) {
@@ -26,6 +27,9 @@ export default class SubscriptionScreen extends Component {
 		this.route = this.props.navigation.state.params.route;
 		this.themeColor = this.props.navigation.state.params.themeColor ?? '#007bff';
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor ?? '#FFF';
+		this.routeBack = this.props.navigation.state.params.routeBack || 'ConfigScreen';
+		this.routeAPI = this.props.navigation.state.params.routeAPI || ROUTE_API;
+		this.isContainerPaymentType = this.props.navigation.state.params.isContainerPaymentType || false;
 
 		this.state = {
 			checkedPaymentType: 'card',
@@ -160,12 +164,14 @@ export default class SubscriptionScreen extends Component {
 				is_change: this.state.is_change,
 				themeColor: this.themeColor,
 				buttonTextColor: this.buttonTextColor,
+				routeAPI: this.routeAPI,
+				routeBack: this.routeBack
 			});
 		} else {
 			if (this.state.screen == 'RegisterDocumentsStepScreen') {
 				navigate('RegisterFinishedScreen');
 			} else {
-				navigate('ConfigScreen');
+				navigate(this.routeBack);
 			}
 		}
 	}
@@ -284,28 +290,30 @@ export default class SubscriptionScreen extends Component {
 				<TitleHeader text={strings.selectedAPlan} align="flex-start" />
 
 				<View style={styles.containerCheckBox}>
-					<View>
-                        <CheckBox
-                            title={strings.byService}
-                            checked={this.state.checkedPaymentForm}
-							iconType="material"
-							size={26}
-							checkedIcon="check-circle"
-							uncheckedIcon="radio-button-unchecked"
-                            onPress={() => this.handleTogglePaymentForm()}
-                            containerStyle={styles.checkBoxStyle}
-                        />
-                        <CheckBox
-                            title={strings.bySubscription}
-                            checked={!this.state.checkedPaymentForm}
-							iconType="material"
-							size={26}
-							checkedIcon="check-circle"
-							uncheckedIcon="radio-button-unchecked"
-                            onPress={() => this.handleTogglePaymentForm()}
-                            containerStyle={styles.checkBoxStyle}
-                        />
-                    </View>
+				{this.isContainerPaymentType ? 
+						( <View>
+							<CheckBox
+								title={strings.byService}
+								checked={this.state.checkedPaymentForm}
+								iconType="material"
+								size={26}
+								checkedIcon="check-circle"
+								uncheckedIcon="radio-button-unchecked"
+								onPress={() => this.handleTogglePaymentForm()}
+								containerStyle={styles.checkBoxStyle}
+							/>
+							<CheckBox
+								title={strings.bySubscription}
+								checked={!this.state.checkedPaymentForm}
+								iconType="material"
+								size={26}
+								checkedIcon="check-circle"
+								uncheckedIcon="radio-button-unchecked"
+								onPress={() => this.handleTogglePaymentForm()}
+								containerStyle={styles.checkBoxStyle}
+							/>
+                    	</View>) 
+					: null}
 					{!this.state.checkedPaymentForm ?
 						<View
 							style={{
