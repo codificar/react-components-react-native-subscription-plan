@@ -19,7 +19,7 @@ import {
 	Alert,
 	ActivityIndicator,
 } from 'react-native';
-import { ROUTE_API } from 'react-native-subscription/src/constants';
+import { ROUTE_API } from '../constants';
 
 export default class SubscriptionDetailsScreen extends Component {
 	constructor(props) {
@@ -56,11 +56,6 @@ export default class SubscriptionDetailsScreen extends Component {
 			return true;
 		});
 		this.getSubscriptionDetails();
-	}
-
-
-    async componentWillUnmount() {
-        this.willFocus.remove();
 	}
 
 	getSubscriptionDetails() {

@@ -18,7 +18,7 @@ import {
 import { CheckBox } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import * as parse from '../../Util/Parse';
-import { ROUTE_API } from 'react-native-subscription/src/constants';
+import { ROUTE_API } from '../../constants';
 
 export default class SubscriptionScreen extends Component {
 	constructor(props) {

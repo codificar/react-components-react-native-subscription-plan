@@ -16,10 +16,12 @@ import {
 	FlatList,
 	Image,
 	ScrollView,
-	ActivityIndicator
+	ActivityIndicator,
+	Dimensions
 } from 'react-native';
 
 import { listCards, newSubscriptionPlan } from '../services/api';
+import { ROUTE_API } from '../constants';
 
 export default class SubscriptionFinishScreen extends Component {
 	constructor(props) {
@@ -318,7 +320,7 @@ export default class SubscriptionFinishScreen extends Component {
 									</Text>
 								</TouchableOpacity>
 
-								<ScrollView style={{ width: '100%'}}>
+								<ScrollView style={{ width: '100%', height: Dimensions.get('window').height / 2.4}}>
 									{this.renderCards()}
 								</ScrollView>
 							</View>
