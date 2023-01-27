@@ -338,7 +338,7 @@ export default class SubscriptionFinishScreen extends Component {
 									</Text>
 								</TouchableOpacity>
 
-								<ScrollView style={{ width: '100%', height: Dimensions.get('window').height / 2.4}}>
+								<ScrollView style={{ width: '100%', height: Dimensions.get('window').height / 2}}>
 									{this.renderCards()}
 								</ScrollView>
 							</View>
