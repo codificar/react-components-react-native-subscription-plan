@@ -18,6 +18,7 @@ import {
 	ScrollView,
 	ActivityIndicator
 } from 'react-native';
+import { ROUTE_API } from '../../constants';
 
 import { listCards, newSubscriptionPlan } from '../services/api';
 
