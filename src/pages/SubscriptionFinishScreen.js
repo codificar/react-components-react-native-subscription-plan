@@ -291,7 +291,7 @@ export default class SubscriptionFinishScreen extends Component {
 				<TitleHeader text={strings.checkoutSubscription} align="flex-start" />
 
 				<View style={styles.containerDetails}>
-					<View>
+					<ScrollView style={{ width: '100%'}}>
 						<View style={styles.contentDetails}>
 							<Text style={styles.planName}>{this.state.item.name}</Text>
 
@@ -337,13 +337,10 @@ export default class SubscriptionFinishScreen extends Component {
 										{strings.addCard}
 									</Text>
 								</TouchableOpacity>
-
-								<ScrollView style={{ width: '100%', height: Dimensions.get('window').height / 2}}>
-									{this.renderCards()}
-								</ScrollView>
+								{this.renderCards()}
 							</View>
 						)}
-					</View>
+					</ScrollView>
 
 					<View style={styles.nextButton}>
 						<TouchableOpacity
