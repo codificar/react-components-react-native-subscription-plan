@@ -18,7 +18,7 @@ import {
 	ScrollView,
 	ActivityIndicator
 } from 'react-native';
-import { ROUTE_API } from '../../constants';
+import * as constants from '../constants/index';
 
 import { listCards, newSubscriptionPlan } from '../services/api';
 
@@ -29,7 +29,7 @@ export default class SubscriptionFinishScreen extends Component {
 		this.route = this.props.navigation.state.params.route;
 		this.themeColor = this.props.navigation.state.params.themeColor;
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor;
-		this.routeAPI = this.props.navigation.state.params.routeAPI || ROUTE_API;
+		this.routeAPI = this.props.navigation.state.params.routeAPI || constants.ROUTE_API;
 		this.routeBack = this.props.navigation.state.params.routeBack || 'ConfigScreen';
 
 		this.arrayIconsType = {};
@@ -319,7 +319,7 @@ export default class SubscriptionFinishScreen extends Component {
 									</Text>
 								</TouchableOpacity>
 
-								<ScrollView style={{ width: '100%'}}>
+								<ScrollView style={{ width: '100%',height: 300}}>
 									{this.renderCards()}
 								</ScrollView>
 							</View>

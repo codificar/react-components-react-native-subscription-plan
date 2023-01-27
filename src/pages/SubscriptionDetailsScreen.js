@@ -19,7 +19,7 @@ import {
 	Alert,
 	ActivityIndicator,
 } from 'react-native';
-import { ROUTE_API } from '../../constants';
+import * as constants from '../constants/index';
 
 export default class SubscriptionDetailsScreen extends Component {
 	constructor(props) {
@@ -29,7 +29,7 @@ export default class SubscriptionDetailsScreen extends Component {
 		this.routeBack = this.props.navigation.state.params.routeBack || 'ConfigScreen';
 		this.themeColor = this.props.navigation.state.params.themeColor ?? '#007bff';
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor ?? '#FFF';
-		this.routeAPI = this.props.navigation.state.params.routeAPI || ROUTE_API;
+		this.routeAPI = this.props.navigation.state.params.routeAPI || constants.ROUTE_API;
 		this.isContainerPaymentType = this.props.navigation.state.params.isContainerPaymentType || false;
 
 		if(this.provider._id) {

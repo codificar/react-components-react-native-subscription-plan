@@ -18,7 +18,7 @@ import {
 import { CheckBox } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import * as parse from '../../Util/Parse';
-import { ROUTE_API } from '../../constants';
+import * as constants from '../../constants';
 
 export default class SubscriptionScreen extends Component {
 	constructor(props) {
@@ -28,7 +28,7 @@ export default class SubscriptionScreen extends Component {
 		this.themeColor = this.props.navigation.state.params.themeColor ?? '#007bff';
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor ?? '#FFF';
 		this.routeBack = this.props.navigation.state.params.routeBack || 'ConfigScreen';
-		this.routeAPI = this.props.navigation.state.params.routeAPI || ROUTE_API;
+		this.routeAPI = this.props.navigation.state.params.routeAPI || constants.ROUTE_API;
 		this.isContainerPaymentType = this.props.navigation.state.params.isContainerPaymentType || false;
 
 		this.state = {
