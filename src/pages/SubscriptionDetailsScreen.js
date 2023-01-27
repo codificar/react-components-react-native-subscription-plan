@@ -31,6 +31,11 @@ export default class SubscriptionDetailsScreen extends Component {
 			signature: {},
 			status: '',
 		};
+
+		this.willFocus = this.props.navigation.addListener("willFocus", async () => {
+			this.getSubscriptionDetails();
+			console.log("opa",this.state.signature.paid_status);
+        });
 	}
 
 	componentDidMount() {
@@ -39,6 +44,7 @@ export default class SubscriptionDetailsScreen extends Component {
 			return true;
 		});
 		this.getSubscriptionDetails();
+		console.log("componentDidMount",this.state.signature);
 	}
 
 	getSubscriptionDetails() {
@@ -53,10 +59,12 @@ export default class SubscriptionDetailsScreen extends Component {
 				} else {
 					data.status = strings.active;
 				}
+				console.log(data);
 
 				this.setState({
 					signature: data,
 				});
+				console.log("this.state.signature.paid_status",this.state.signature.paid_status);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -136,7 +144,11 @@ export default class SubscriptionDetailsScreen extends Component {
 	}
 
 	handleClickBillet() {
-		Linking.openURL(this.state.signature.billet_link);
+		if(this.state.signature.billet_link) {
+			Linking.openURL(this.state.signature.billet_link);
+		} else {
+			Alert.alert('Opps',strings.invalid_link);
+		}
 	}
 
 	render() {
@@ -179,14 +191,14 @@ export default class SubscriptionDetailsScreen extends Component {
 								</Text>
 							</Text>
 
-							{this.state.signature.billet_link && (
+							{this.state.signature.paid_status == 'waiting_payment' && !this.state.signature.is_pix ? (
 								<View style={styles.billetView}>
 									<Text style={styles.planDetails}>{strings.accessBillet}</Text>
 									<TouchableOpacity onPress={() => this.handleClickBillet()}>
 										<Icon name="external-link" size={28} color={'#000'} />
 									</TouchableOpacity>
 								</View>
-							)}
+							): null }
 
 							<View style={styles.optionsView}>
 								{!this.state.signature.is_cancelled &&

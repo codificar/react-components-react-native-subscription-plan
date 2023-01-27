@@ -13,3 +13,4 @@ export const CANCEL_SUBSCRIPTION =
 	LIBS_URL + HOST_PROVIDER_URL + '/cancel_subscription';
 export const ADD_CARD = '/api/add_card';
 export const LIST_CARD = '/api/list_provider_cards';
+export const GET_SETTINGS = '/application/settings';

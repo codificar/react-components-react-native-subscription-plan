@@ -134,7 +134,7 @@ export default class SubscriptionFinishScreen extends Component {
 
 				const { data } = response;
 				if (parse.isSuccess(data)) {
-					Alert.alert(
+					return Alert.alert(
 						'',
 						strings.successText,
 						[
@@ -147,7 +147,7 @@ export default class SubscriptionFinishScreen extends Component {
 					);
 				}
 				if (data.error == "O campo payment id é necessário quando charge type é card.") {
-					Alert.alert(
+					return Alert.alert(
 						strings.error,
 						strings.payment_method,
 						[
@@ -161,7 +161,35 @@ export default class SubscriptionFinishScreen extends Component {
 					);
 				}
 				if (data.error) {
-					Alert.alert(
+					if(data.charge_type == "pix"){
+						return Alert.alert(
+							strings.error,
+							strings.pix_error,
+							[
+								{
+									text: strings.ok,
+									onPress: () => function () { },
+									style: 'cancel',
+								},
+							],
+							{ cancelable: true },
+						);
+					}
+					if(data.charge_type == "billet"){
+						return Alert.alert(
+							strings.error,
+							strings.billet_error,
+							[
+								{
+									text: strings.ok,
+									onPress: () => function () { },
+									style: 'cancel',
+								},
+							],
+							{ cancelable: true },
+						);
+					}
+					return Alert.alert(
 						strings.error,
 						strings.cardError,
 						[

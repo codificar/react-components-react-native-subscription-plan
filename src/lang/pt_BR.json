@@ -53,5 +53,8 @@
   "payment_method":"Por favor, retorne e selecione um mêtodo de pagamento para prosseguir",
   "cardError":"Houve um problema com a autenticação do cartão, por favor, cadastre o novamente",
   "noPlan":"Não há outras opções de plano disponíveis no momento",
-  "noPlanAvailable":"So é possível prosseguir com planos disponíveis"
+  "noPlanAvailable":"So é possível prosseguir com planos disponíveis",
+  "invalid_link": "Link de acesso não encontrado. Por favor tente mais tarde ou com outro método de pagamento.",
+  "billet_error":"Houve um problema ao gerar o boleto, Por favor tente mais tarde ou com outro método de pagamento.",
+  "pix_error":"Houve um problema ao tentar gerar o qrcode para pagamento, Por favor tente mais tarde ou com outro método de pagamento."
 }
