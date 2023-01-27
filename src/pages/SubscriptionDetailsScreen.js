@@ -173,7 +173,11 @@ export default class SubscriptionDetailsScreen extends Component {
             params: {
                 provider: this.props.providerProfile,
                 request_id: null,
-                transaction_id: this.state.signature.transaction_db_id 
+                transaction_id: this.state.signature.transaction_db_id,
+				route: this.route,
+				routeAPI: this.routeAPI ,
+				routeBack: this.routeBack,
+				isContainerPaymentType: this.isContainerPaymentType,
             }
         });
     }

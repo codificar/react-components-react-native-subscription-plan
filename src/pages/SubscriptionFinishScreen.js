@@ -32,6 +32,8 @@ export default class SubscriptionFinishScreen extends Component {
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor;
 		this.routeAPI = this.props.navigation.state.params.routeAPI || ROUTE_API;
 		this.routeBack = this.props.navigation.state.params.routeBack || 'ConfigScreen';
+		this.isContainerPaymentType = this.props.navigation.state.params.isContainerPaymentType || false;
+
 
 		this.arrayIconsType = {};
 		this.arrayIconsType['VISA'] = images.icon_ub_creditcard_visa;
@@ -109,8 +111,24 @@ export default class SubscriptionFinishScreen extends Component {
 	 * Handle success button press
 	 * @return {void}
 	 */
-	handleSuccessButton() {
+	handleSuccessButton(data) {
 		const { navigate } = this.props.navigation;
+
+		if(this.state.charge_type == 'gatewayPix') {
+			return navigate('PixQrCodeScreen', 
+			{
+				routeName: "PixQrCodeScreen",
+				params: {
+					provider: this.provider,
+					request_id: null,
+					transaction_id: data.transaction_db_id,
+					route: this.route,
+					routeAPI: this.routeAPI ,
+					routeBack: this.routeBack,
+					isContainerPaymentType: this.isContainerPaymentType,
+				}
+			});
+		}
 
 		if (this.state.screen == 'RegisterDocumentsStepScreen') {
 			navigate('RegisterFinishedScreen');
@@ -149,7 +167,7 @@ export default class SubscriptionFinishScreen extends Component {
 						[
 							{
 								text: 'Ok',
-								onPress: () => this.handleSuccessButton(),
+								onPress: () => this.handleSuccessButton(data),
 							},
 						],
 						{ cancelable: false },
