@@ -43,6 +43,7 @@ export default class SubscriptionFinishScreen extends Component {
 		this.arrayIconsType['TERRACARD'] = images.terra_card;
 
 		this.state = {
+			message: strings.commum_error,
 			isLoading: false,
 			isLoadingCards: false,
 			loading_message: strings.loading,
@@ -105,6 +106,30 @@ export default class SubscriptionFinishScreen extends Component {
 	}
 
 	/**
+	 * Handle the error message
+	 * @return {string}
+	 */
+	handleMessageError(data) {
+		if(data.message) {
+			this.setState({
+				message: data.message
+			});	
+			return
+		} 
+		if(data.charge_type == "billet"){
+			this.setState({
+				message: strings.billet_error,
+			});
+			return
+		}
+		if(error == "pix"){
+			this.setState({
+				message: strings.pix_error,
+			});
+		}
+	}
+
+	/**
 	 * Handle success button press
 	 * @return {void}
 	 */
@@ -155,13 +180,10 @@ export default class SubscriptionFinishScreen extends Component {
 					);
 				}
 				if (data.error) {
-					let message = strings.cardError;
-					if(data.message) {
-						message = data.message;
-					} 
+					this.handleMessageError(data);
 					Alert.alert(
 						strings.error,
-						message,
+						this.state.message,
 						[
 							{
 								text: strings.ok,

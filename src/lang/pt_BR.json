@@ -60,5 +60,8 @@
   "view_plans": "Ver Planos",
   "accessQRCodePix": "Clique aqui para acessar o QRCode para o pagamento.",
   "invalid_link": "Link de acesso não encontrado. Por favor tente mais tarde ou com outro método de pagamento.",
-  "empty_cards": "Não há cartões cadastrados"
+  "empty_cards": "Não há cartões cadastrados",
+  "billet_error":"Houve um problema ao gerar o boleto, Por favor tente mais tarde ou com outro método de pagamento.",
+  "pix_error":"Houve um problema ao tentar gerar o qrcode para pagamento, Por favor tente mais tarde ou com outro método de pagamento.",
+  "commum_error":"Ocorreu um erro, Por favor tente novamente mais tarde."
 }
