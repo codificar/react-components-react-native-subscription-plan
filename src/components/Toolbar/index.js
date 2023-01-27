@@ -32,7 +32,7 @@ class ToolBar extends Component {
                 <View style={{ height: 40 }}>
                     <TouchableOpacity
                         style={{ width: 60 }}
-                        onPress={() => this.handlePress()}w
+                        onPress={() => this.handlePress()}
                     >
                         <Image
                             style={styles.img}
@@ -51,12 +51,14 @@ const styles = StyleSheet.create({
         height: 90 + statusbarHeight,
         position: "absolute",
         top: 0,
+        paddingHorizontal: 25,
     },
     principal2: {
         height: 40,
         width: "100%",
         marginTop: 20 + statusbarHeight,
-        elevation: 1
+        elevation: 1,
+        paddingHorizontal: 25,
     },
     iconPress: {
         position: "absolute",

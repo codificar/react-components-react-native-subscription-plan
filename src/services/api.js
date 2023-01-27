@@ -78,8 +78,10 @@ export function addCard(
 	card_cvv,
 	card_expiration_month,
 	card_expiration_year,
+	routeAPI = constants.ROUTE_API
 ) {
-	return axios.post(url + constants.ADD_CARD, {
+	
+	return axios.post(`${url}${routeAPI}${constants.ADD_CARD}`, {
 		id: id,
 		token: token,
 		card_holder: card_holder,
@@ -97,8 +99,8 @@ export function addCard(
  * @param {number} id
  * @param {string} token
  */
-export function listCards(url, id, token) {
-	return axios.get(url + constants.LIST_CARD, {
+export function listCards(url, id, token, routeAPI = constants.ROUTE_API) {
+	return axios.get(`${url}${routeAPI}${constants.LIST_CARD}`, {
 		params: {id, token},
 	});
 }
@@ -131,5 +133,14 @@ export function plataformRequireSubscription(url,  id, token, lat, lng) {
 			lat,
 			lng
 		}
+	});
+}
+
+/**
+* Get the Settings from server
+*/
+export function getSettingsServer(url) {
+	return axios.get(`${url}${constants.GET_SETTINGS}`, {
+		params: {user_type: 'provider'},
 	});
 }
