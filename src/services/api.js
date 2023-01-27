@@ -133,3 +133,12 @@ export function plataformRequireSubscription(url,  id, token, lat, lng) {
 		}
 	});
 }
+
+/**
+* Get the Settings from server
+*/
+export function getSettingsServer(url) {
+	return axios.get(`${url}${constants.GET_SETTINGS}`, {
+		params: {user_type: 'provider'},
+	});
+}

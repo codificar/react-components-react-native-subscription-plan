@@ -10,8 +10,10 @@ export default StyleSheet.create({
 	},
 	containerList: {
 		flex: 1,
+		justifyContent: 'center',
 		backgroundColor: '#FBFBFB',
 		padding: 0,
+		marginTop: 20
 	},
 	listPlanTitle: {
 		fontSize: 18,
@@ -42,6 +44,56 @@ export default StyleSheet.create({
 		fontSize: 16,
 		marginBottom: 5,
 	},
+	statusExpired: {
+        backgroundColor: '#ff4040',
+        width: 70,
+        textAlign: 'center',
+        padding: 5,
+        borderRadius: 5,
+        color: '#fff',
+        fontWeight: 'bold'
+    },
+    billetLink: {
+        textAlign: "center",
+        fontSize: 16,
+        marginBottom: 5,
+        color: '#007bff'
+    },
+    pixView: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 10,
+        padding: 5,
+        borderRadius: 5,
+        color: '#FFF'
+    },
+    pixLink: {
+        textAlign: "center",
+        fontSize: 16,
+        marginBottom: 5,
+        color: '#007bff'
+    },
+    morePlans: {
+        display: 'flex',
+        justifyContent: 'center', 
+        alignItems: 'center',
+        backgroundColor: '#DDD',
+        borderRadius: 5,
+        marginBottom: 30,
+        padding: 15,
+        marginLeft: 20,
+        marginRight:20
+    },
+    statusActive: {
+        backgroundColor: 'green',
+        width: 70,
+        textAlign: 'center',
+        padding: 2,
+        borderRadius: 5,
+        color: '#fff',
+        fontWeight: 'bold',
+    },
 	planDetailsTitle: {
 		fontSize: 20,
 		marginBottom: 15,
@@ -102,7 +154,8 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#007bff',
 		borderRadius: 12,
-		height: 23,
+        height: 20,
+        width: 20
 	},
 	statusOpen: {
 		backgroundColor: '#ff4040',
@@ -137,6 +190,7 @@ export default StyleSheet.create({
 		backgroundColor: '#FFF',
 		padding: 25,
 		borderRadius: 5,
+		elevation: 1
 	},
 	planName: {
 		fontWeight: 'bold',
@@ -163,6 +217,7 @@ export default StyleSheet.create({
 		backgroundColor: '#FFF',
 		padding: 25,
 		borderRadius: 5,
+        elevation: 1
 	},
 	textDetailsBox: {
 		fontWeight: 'bold',

@@ -17,6 +17,7 @@ import {
 	Linking,
 	TouchableOpacity,
 	Alert,
+	ActivityIndicator,
 } from 'react-native';
 
 export default class SubscriptionDetailsScreen extends Component {
@@ -24,10 +25,20 @@ export default class SubscriptionDetailsScreen extends Component {
 		super(props);
 		this.provider = this.props.navigation.state.params.provider;
 		this.route = this.props.navigation.state.params.route;
+		this.routeBack = this.props.navigation.state.params.routeBack || 'ConfigScreen';
 		this.themeColor = this.props.navigation.state.params.themeColor ?? '#007bff';
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor ?? '#FFF';
 
+		if(this.provider._id) {
+			this.provider.id = this.provider._id;
+		} 
+
+		if(this.provider._token) {
+			this.provider.token = this.provider._token
+		}
+
 		this.state = {
+            isLoading: true,
 			signature: {},
 			status: '',
 		};
@@ -42,6 +53,7 @@ export default class SubscriptionDetailsScreen extends Component {
 	}
 
 	getSubscriptionDetails() {
+        this.setState({isLoading: true});
 		subscriptionDetails(this.route, this.provider.id, this.provider.token)
 			.then((response) => {
 				const { data } = response;
@@ -56,10 +68,12 @@ export default class SubscriptionDetailsScreen extends Component {
 
 				this.setState({
 					signature: data,
+					isLoading: false
 				});
 			})
 			.catch((error) => {
 				console.log(error);
+				this.setState({isLoading: false});
 			});
 	}
 
@@ -136,7 +150,124 @@ export default class SubscriptionDetailsScreen extends Component {
 	}
 
 	handleClickBillet() {
-		Linking.openURL(this.state.signature.billet_link);
+		if(this.state.signature.billet_link) {
+            Linking.openURL(this.state.signature.billet_link);
+        } else {
+            Alert.alert('Opps', strings('subscription.invalid_link'));
+        }
+	}
+    handleClickPix() {
+        const { navigate } = this.props.navigation;
+        return navigate('PixQrCodeScreen', 
+        {
+            routeName: "PixQrCodeScreen",
+            params: {
+                provider: this.props.providerProfile,
+                request_id: null,
+                transaction_id: this.state.signature.transaction_db_id 
+            }
+        });
+    }
+
+    renderStatus() {
+        if (this.state.signature.expired) {
+            return (<Text style={styles.statusExpired}>{strings.expired}</Text>);
+        } else if (this.state.signature.is_cancelled == 1) {
+            return (<Text style={styles.statusExpired}>{strings.cancelled}</Text>);
+        } else if (this.state.signature.activity == 0) {
+            return (<Text style={styles.statusExpired}>{strings.inactive}</Text>);
+        } else {
+            return (<Text style={styles.statusActive}>{strings.active}</Text>);
+        }
+    }
+
+	renderScreen() {
+		if(this.state.isLoading) {
+			return (
+				<View style={{display: 'flex', flex: 1, justifyContent: 'center', alignContent: 'center'}}>
+					<ActivityIndicator size="large" color={this.themeColor} />
+				</View>
+			);
+		}
+
+		if(!this.state.signature.paid_status) {
+			return (
+				<View style={styles.noSubscription}>
+					<Text>{strings.no_subscription}</Text>
+				</View>
+			);
+		}
+		
+		return (
+			<View style={styles.containerDetails}>
+				<View style={styles.detailsBox}>
+					<Text
+						style={[
+							this.state.signature.paid_status != 'paid'
+								? styles.statusOpen
+								: styles.statusPaid,
+						]}>
+						{this.state.signature.paid_status != 'paid'
+							? strings.open
+							: strings.paid}
+					</Text>
+
+					<Text style={styles.textDetailsBox}>
+						{this.state.signature.plan_name}
+					</Text>
+
+					<Text style={styles.planDetails}>
+						{strings.due} {'\n'}
+						<Text style={styles.fontBold}>
+							{this.state.signature.next_expiration}
+						</Text>
+					</Text>
+					<View style={styles.planDetails}>
+						<Text>
+							Status:
+						</Text>
+						{this.renderStatus()}
+					</View>
+					
+					{this.state.signature.paid_status == 'waiting_payment' && 
+						!this.state.signature.is_pix &&
+						this.state.signature.billet_link ?
+						(<View style={styles.billetView}>
+							<TouchableOpacity
+								onPress={() => this.handleClickBillet()}
+							>
+								<Text style={styles.billetLink}>
+									{strings.accessBillet}
+								</Text>
+							</TouchableOpacity>
+						</View>) : null
+					}
+					{this.state.signature.paid_status == 'waiting_payment' &&
+						this.state.signature.is_pix ?
+						(<View style={styles.pixView}>
+							<TouchableOpacity
+								onPress={() => this.handleClickPix()}
+							>
+								<Text style={styles.pixLink}>
+									{strings.accessQRCodePix}
+								</Text>
+							</TouchableOpacity>
+						</View>): null
+					}
+
+					<View style={styles.optionsView}>
+						{!this.state.signature.is_cancelled &&
+							<TouchableOpacity
+									onPress={() => this.alertCancelSubscription()}>
+								<Text style={styles.cancelText}>
+									{strings.cancel}
+								</Text>
+							</TouchableOpacity>
+						}
+					</View>
+				</View>
+			</View>
+		);
 	}
 
 	render() {
@@ -144,68 +275,20 @@ export default class SubscriptionDetailsScreen extends Component {
 			<View style={styles.parentContainer}>
 				<Toolbar
 					back={true}
-					handlePress={() => this.props.navigation.goBack()}
+					handlePress={() => this.props.navigation.navigate(routeBack)}
 				/>
 				<TitleHeader text={strings.subscriptionDetails} align="flex-start" />
-
-				{this.state.signature.paid_status ? (
-					<View style={styles.containerDetails}>
-						<View style={styles.detailsBox}>
-							<Text
-								style={[
-									this.state.signature.paid_status != 'paid'
-										? styles.statusOpen
-										: styles.statusPaid,
-								]}>
-								{this.state.signature.paid_status != 'paid'
-									? strings.open
-									: strings.paid}
-							</Text>
-
-							<Text style={styles.textDetailsBox}>
-								{this.state.signature.plan_name}
-							</Text>
-
-							<Text style={styles.planDetails}>
-								{strings.due} {'\n'}
-								<Text style={styles.fontBold}>
-									{this.state.signature.next_expiration}
-								</Text>
-							</Text>
-							<Text style={styles.planDetails}>
-								Status: {'\n'}
-								<Text style={styles.fontBold}>
-									{this.state.signature.status}
-								</Text>
-							</Text>
-
-							{this.state.signature.billet_link && (
-								<View style={styles.billetView}>
-									<Text style={styles.planDetails}>{strings.accessBillet}</Text>
-									<TouchableOpacity onPress={() => this.handleClickBillet()}>
-										<Icon name="external-link" size={28} color={'#000'} />
-									</TouchableOpacity>
-								</View>
-							)}
-
-							<View style={styles.optionsView}>
-								{!this.state.signature.is_cancelled &&
-									<TouchableOpacity
-										onPress={() => this.alertCancelSubscription()}>
-										<Text style={styles.fontBold}>{strings.cancel}</Text>
-									</TouchableOpacity>
-								}
-								<TouchableOpacity onPress={() => this.navigate()}>
-									<Text style={styles.fontBold}>{strings.change}</Text>
-								</TouchableOpacity>
-							</View>
-						</View>
-					</View>
-				) : (
-					<View style={styles.noSubscription}>
-						<Text>{strings.no_subscription}</Text>
-					</View>
-				)}
+				{this.renderScreen()}
+				<View>
+                    <TouchableOpacity
+                        style={styles.morePlans}
+                        onPress={() => this.navigate()}
+                    >
+                        <Text style={styles.fontBold}>
+                            {strings.view_plans}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
 			</View>
 		);
 	}

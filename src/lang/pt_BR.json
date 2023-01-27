@@ -53,5 +53,12 @@
   "payment_method":"Por favor, retorne e selecione um mêtodo de pagamento para prosseguir",
   "cardError":"Houve um problema com a autenticação do cartão, por favor, cadastre o novamente",
   "noPlan":"Não há outras opções de plano disponíveis no momento",
-  "noPlanAvailable":"So é possível prosseguir com planos disponíveis"
+  "noPlanAvailable":"So é possível prosseguir com planos disponíveis",
+  "paymentForms": "Formas de Pagamento",
+  "pix": "Pix",
+  "expired": "Expirado",
+  "view_plans": "Ver Planos",
+  "accessQRCodePix": "Clique aqui para acessar o QRCode para o pagamento.",
+  "invalid_link": "Link de acesso não encontrado. Por favor tente mais tarde ou com outro método de pagamento.",
+  "empty_cards": "Não há cartões cadastrados"
 }
