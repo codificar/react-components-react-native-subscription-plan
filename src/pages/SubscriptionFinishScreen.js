@@ -16,11 +16,13 @@ import {
 	FlatList,
 	Image,
 	ScrollView,
-	ActivityIndicator
+	ActivityIndicator,
+	Dimensions
 } from 'react-native';
 import * as constants from '../constants/index';
 
 import { listCards, newSubscriptionPlan } from '../services/api';
+import { ROUTE_API } from '../constants';
 
 export default class SubscriptionFinishScreen extends Component {
 	constructor(props) {
@@ -31,6 +33,8 @@ export default class SubscriptionFinishScreen extends Component {
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor;
 		this.routeAPI = this.props.navigation.state.params.routeAPI || constants.ROUTE_API;
 		this.routeBack = this.props.navigation.state.params.routeBack || 'ConfigScreen';
+		this.isContainerPaymentType = this.props.navigation.state.params.isContainerPaymentType || false;
+
 
 		this.arrayIconsType = {};
 		this.arrayIconsType['VISA'] = images.icon_ub_creditcard_visa;
@@ -133,8 +137,24 @@ export default class SubscriptionFinishScreen extends Component {
 	 * Handle success button press
 	 * @return {void}
 	 */
-	handleSuccessButton() {
+	handleSuccessButton(data) {
 		const { navigate } = this.props.navigation;
+
+		if(this.state.charge_type == 'gatewayPix') {
+			return navigate('PixQrCodeScreen', 
+			{
+				routeName: "PixQrCodeScreen",
+				params: {
+					provider: this.provider,
+					request_id: null,
+					transaction_id: data.transaction_db_id,
+					route: this.route,
+					routeAPI: this.routeAPI ,
+					routeBack: this.routeBack,
+					isContainerPaymentType: this.isContainerPaymentType,
+				}
+			});
+		}
 
 		if (this.state.screen == 'RegisterDocumentsStepScreen') {
 			navigate('RegisterFinishedScreen');
@@ -173,7 +193,7 @@ export default class SubscriptionFinishScreen extends Component {
 						[
 							{
 								text: 'Ok',
-								onPress: () => this.handleSuccessButton(),
+								onPress: () => this.handleSuccessButton(data),
 							},
 						],
 						{ cancelable: false },
@@ -294,7 +314,7 @@ export default class SubscriptionFinishScreen extends Component {
 				<TitleHeader text={strings.checkoutSubscription} align="flex-start" />
 
 				<View style={styles.containerDetails}>
-					<View>
+					<ScrollView style={{ width: '100%'}}>
 						<View style={styles.contentDetails}>
 							<Text style={styles.planName}>{this.state.item.name}</Text>
 
@@ -340,13 +360,10 @@ export default class SubscriptionFinishScreen extends Component {
 										{strings.addCard}
 									</Text>
 								</TouchableOpacity>
-
-								<ScrollView style={{ width: '100%',height: 300}}>
-									{this.renderCards()}
-								</ScrollView>
+								{this.renderCards()}
 							</View>
 						)}
-					</View>
+					</ScrollView>
 
 					<View style={styles.nextButton}>
 						<TouchableOpacity
