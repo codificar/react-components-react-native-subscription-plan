@@ -125,7 +125,6 @@ export function cancelSubscription(url, id, token, subscription_id) {
  * @param {number} lng
  */
 export function plataformRequireSubscription(url,  id, token, lat, lng) {
-	console.log(url + constants.GET_REQUIRED_PLANS,  id, token, lat, lng);
 	return axios.get(url + constants.GET_REQUIRED_PLANS, {
 		params: {
 			id,

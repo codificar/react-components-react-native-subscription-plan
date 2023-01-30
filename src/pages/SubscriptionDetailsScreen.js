@@ -56,7 +56,6 @@ export default class SubscriptionDetailsScreen extends Component {
 			return true;
 		});
 		this.getSubscriptionDetails();
-		console.log("componentDidMount",this.state.signature);
 	}
 
 	getSubscriptionDetails() {
@@ -72,13 +71,11 @@ export default class SubscriptionDetailsScreen extends Component {
 				} else {
 					data.status = strings.active;
 				}
-				console.log(data);
 
 				this.setState({
 					signature: data,
 					isLoading: false
 				});
-				console.log("this.state.signature.paid_status",this.state.signature.paid_status);
 			})
 			.catch((error) => {
 				console.log(error);
