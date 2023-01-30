@@ -114,7 +114,7 @@ export default class SubscriptionFinishScreen extends Component {
 	 * @return {string}
 	 */
 	handleMessageError(data) {
-		if(data.message) {
+		if(data.message && data.charge_type == "card" ) {
 			this.setState({
 				message: data.message
 			});	
@@ -126,7 +126,7 @@ export default class SubscriptionFinishScreen extends Component {
 			});
 			return
 		}
-		if(error == "pix"){
+		if(data.charge_type == "gatewayPix"){
 			this.setState({
 				message: strings.pix_error,
 			});
