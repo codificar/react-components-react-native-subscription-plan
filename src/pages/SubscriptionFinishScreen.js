@@ -80,6 +80,9 @@ export default class SubscriptionFinishScreen extends Component {
 	 * @return {void}
 	 */
 	listProviderCards() {
+		if(this.state.charge_type != "card"){
+			return;
+		}
 		this.setState({isLoadingCards: true});
 		listCards(this.route, this.provider.id, this.provider.token, this.routeAPI)
 			.then((response) => {
