@@ -76,7 +76,6 @@ export default class SubscriptionScreen extends Component {
 					isLoadingPlans: false,
 					checkedPaymentForm: this.props.navigation.state.params.is_change,
 				});
-				console.log(this.state,this.props.navigation.state.params.is_change);
 			})
 			.catch((error) => {
 				this.setState({ isLoadingPlans: false});
