@@ -162,7 +162,16 @@ export default class SubscriptionFinishScreen extends Component {
 		if (this.state.screen == 'RegisterDocumentsStepScreen') {
 			navigate('RegisterFinishedScreen');
 		} else {
-			navigate('SubscriptionDetailsScreen');
+			navigate('SubscriptionDetailsScreen',{
+					provider: this.provider,
+					route: this.route,
+					routeBack: this.routeBack,
+					themeColor: this.themeColor,
+					buttonTextColor:this.buttonTextColor,
+					routeAPI: this.routeAPI,
+					isContainerPaymentType: this.isContainerPaymentType,
+				}
+			);
 		}
 	}
 
