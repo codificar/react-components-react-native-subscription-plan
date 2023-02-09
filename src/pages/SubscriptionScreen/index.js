@@ -75,7 +75,7 @@ export default class SubscriptionScreen extends Component {
 					plans: plans,
 					selectedPlan: plans.length > 0 ? plans[0] : {},
 					isLoadingPlans: false,
-					checkedPaymentForm: this.props.navigation.state.params.is_change,
+					checkedPaymentForm: this.props.navigation.state.params.is_change || true,
 				});
 			})
 			.catch((error) => {
@@ -155,7 +155,7 @@ export default class SubscriptionScreen extends Component {
 				],
 				{ cancelable: true },
 			);
-		}else if (!this.state.checkedPaymentForm) {
+		}else if (this.state.checkedPaymentForm) {
 			navigate('SubscriptionFinishScreen', {
 				provider: this.provider,
 				route: this.route,

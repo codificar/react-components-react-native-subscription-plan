@@ -5,7 +5,7 @@ const cardWidth = Dimensions.get('window').width - 50;
 export default StyleSheet.create({
 	statusExpired: {
         backgroundColor: '#ff4040',
-        width: 70,
+        width: 80,
         textAlign: 'center',
         padding: 5,
         borderRadius: 5,
