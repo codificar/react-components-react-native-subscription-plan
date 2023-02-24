@@ -43,7 +43,7 @@ export default class SubscriptionScreen extends Component {
 			screen: this.props.navigation.state.params.screen,
 			is_change: this.props.navigation.state.params.is_change,
 			verifyButton: 1,
-			checkedPaymentForm: true
+			checkedPaymentForm: this.props.navigation.state.params.checkedPaymentForm ?? true
 		};
 	}
 
