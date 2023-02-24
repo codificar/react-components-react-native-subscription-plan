@@ -66,7 +66,15 @@ export default class SubscriptionScreen extends Component {
 	 */
 	getPlans() {
         this.setState({ isLoadingPlans: true});
-		getAvailablePlans(this.route, this.provider.id, this.provider.token)
+		let id = this.provider.id;
+		let token = this.provider.token;
+		if(this.provider._id) {
+			id = this.provider._id;
+		}
+		if(this.provider._token) {
+			token = this.provider._token;
+		}
+		getAvailablePlans(this.route, id, token)
 			.then((response) => {
 				const { data } = response;
 				const plans = data.plans;
