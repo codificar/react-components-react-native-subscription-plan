@@ -83,7 +83,7 @@ export default class SubscriptionScreen extends Component {
 					plans: plans,
 					selectedPlan: plans.length > 0 ? plans[0] : {},
 					isLoadingPlans: false,
-					checkedPaymentForm: this.props.navigation.state.params.is_change || true,
+					checkedPaymentForm: this.props.navigation.state.params.is_change ?? true,
 				});
 			})
 			.catch((error) => {
