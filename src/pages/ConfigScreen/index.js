@@ -9,6 +9,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import TitleHeader from '../../components/TitleHeader';
 import Toolbar from '../../components/Toolbar';
+import {subscriptionDetails} from '../../services/api';
+
 
 class ConfigScreen extends Component {
 	constructor(props) {
@@ -17,8 +19,45 @@ class ConfigScreen extends Component {
 		this.provider = this.props.navigation.state.params.provider;
 		this.themeColor = this.props.navigation.state.params.themeColor;
 		this.buttonTextColor = this.props.navigation.state.params.buttonTextColor;
-		console.log(this.themeColor, this.buttonTextColor, this.provider);
+		this.activeSubscriptionModule = this.props.navigation.state.params.activeSubscriptionModule;
 
+		this.state = {
+			signature: undefined,
+		}
+
+		this.willFocus = this.props.navigation.addListener("willFocus", () => {
+			this.getSubscriptionDetails();
+		});
+	}
+
+	componentDidMount() {
+		this.getSubscriptionDetails();
+	}
+
+	componentWillUnmount() {
+		this.willFocus.remove();
+	}
+
+	getSubscriptionDetails() {
+		subscriptionDetails(this.route, this.provider.id, this.provider.token)
+			.then((response) => {
+				const {data} = response;
+
+				if (data.is_cancelled == 1) {
+					data.status = strings.cancelled;
+				} else if (data.activity == 0) {
+					data.status = strings.inactive;
+				} else {
+					data.status = strings.active;
+				}
+
+				this.setState({
+					signature: data,
+				});
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 
 	/**
@@ -62,32 +101,12 @@ class ConfigScreen extends Component {
 					</View>
 
 					{
-						/*this.props.settings.is_register_payment_screen_enabled &&*/
+						this.activeSubscriptionModule &&
 						<>
-							<TouchableOpacity
-								onPress={() =>
-									this.props.navigation.navigate('SubscriptionScreen', {
-										provider: this.provider,
-										route: this.route,
-										themeColor: this.themeColor,
-										buttonTextColor: this.buttonTextColor,
-										screen: 'ConfigScreen',
-										is_change: false,
-									})
-								}
-								style={styles.cardContact}>
-								<View style={styles.leftContact}>
-									<Icon
-										name="pencil-plus-outline"
-										size={25}
-										color={'#000'}
-										style={styles.shield}
-									/>
-									<Text style={{color: '#000'}}>{strings.paymentForms}</Text>
-								</View>
-								<Icon name="chevron-right" size={28} color={'#000'} />
-							</TouchableOpacity>
-							<TouchableOpacity
+						{
+							(this.state.signature?.id && !this.state.signature?.is_cancelled) ?
+							(
+								<TouchableOpacity
 								onPress={() =>
 									this.props.navigation.navigate('SubscriptionDetailsScreen', {
 										provider: this.provider,
@@ -110,6 +129,32 @@ class ConfigScreen extends Component {
 								</View>
 								<Icon name="chevron-right" size={28} color={'#000'} />
 							</TouchableOpacity>
+							) : (
+								<TouchableOpacity
+								onPress={() =>
+									this.props.navigation.navigate('SubscriptionScreen', {
+										provider: this.provider,
+										route: this.route,
+										themeColor: this.themeColor,
+										buttonTextColor: this.buttonTextColor,
+										screen: 'ConfigScreen',
+										is_change: false,
+									})
+								}
+								style={styles.cardContact}>
+								<View style={styles.leftContact}>
+									<Icon
+										name="pencil-plus-outline"
+										size={25}
+										color={'#000'}
+										style={styles.shield}
+									/>
+									<Text style={{color: '#000'}}>{strings.subscriptions}</Text>
+								</View>
+								<Icon name="chevron-right" size={28} color={'#000'} />
+							</TouchableOpacity>
+							)
+						}
 						</>
 					}
 				</View>

@@ -18,11 +18,14 @@ export default StyleSheet.create({
 		fontSize: 16,
 	},
 	image: {
+		marginRight: 15,
+		marginLeft: 20,
 		width: 60,
 		height: 60,
 		borderRadius: 55,
 	},
 	cardPerfil: {
+		justifyContent: 'space-evenly',
 		width: cardWidth,
 		marginBottom: 20,
 		height: 100,
