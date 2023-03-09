@@ -87,8 +87,10 @@ export default class SubscriptionScreen extends Component {
 				});
 			})
 			.catch((error) => {
-				this.setState({ isLoadingPlans: false});
-				console.log('getAvailablePlans', error);
+				this.setState({ 
+					isLoadingPlans: false,
+					verifyButton: false
+				});
 			});
 	}
 
