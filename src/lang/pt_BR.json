@@ -53,7 +53,7 @@
   "payment_method":"Por favor, retorne e selecione um mêtodo de pagamento para prosseguir",
   "cardError":"Houve um problema com a autenticação do cartão, por favor, cadastre o novamente",
   "noPlan":"Não há outras opções de plano disponíveis no momento",
-  "noPlanAvailable":"So é possível prosseguir com planos disponíveis",
+  "noPlanAvailable":"Só é possível prosseguir com planos disponíveis",
   "paymentForms": "Formas de Pagamento",
   "pix": "Pix",
   "expired": "Expirado",
