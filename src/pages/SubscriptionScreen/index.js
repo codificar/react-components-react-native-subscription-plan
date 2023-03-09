@@ -150,7 +150,7 @@ export default class SubscriptionScreen extends Component {
 	 */
 	handleConfirmButton() {
 		const { navigate } = this.props.navigation;
-		if(this.state.verifyButton == 0 ){
+		if(this.state.checkedPaymentForm && this.state.verifyButton == 0 ){
 			Alert.alert(
 				strings.error,
 				strings.noPlanAvailable,
