@@ -1,5 +1,5 @@
 {
-	"configuration": "configuration",
+	"configuration": "Configuration",
   "selected": "selected.",
   "subscriptions": "Subscriptions",
   "byService": "By service (fixed or percentage)",
@@ -51,5 +51,17 @@
   "cancelled_with_success":"Plan canceled successfully",
   "error":"error",
   "payment_method":"Please come back and select a payment method to proceed.",
-  "cardError":"There was a problem with card authentication, please register again"
+  "cardError":"There was a problem with card authentication, please register again",
+  "noPlan":"There is no other plan options",
+  "noPlanAvailable":"It is only possible to proceed with the available plans",
+  "paymentForms": "Payment forms",
+  "pix": "Pix",
+  "expired": "Expired",
+  "view_plans": "View Plans",
+  "accessQRCodePix": "Click here to access the QRCode for payment.",
+  "invalid_link": "Access link not found. Please try again later or with another payment method.",
+  "empty_cards": "There are no registered cards",
+  "billet_error":"There was a problem generating the billet, Please try again later or with another payment method.",
+  "pix_error":"There was a problem trying to generate the qrcode for payment, please try again later or with another payment method.",
+  "commum_error":"An error occurred, please try again later."
 }
