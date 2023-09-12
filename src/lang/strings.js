@@ -10,6 +10,8 @@ const deviceLanguage =
 
 if (deviceLanguage == 'en_US') {
 	strings = require('./en.json');
+} else if (deviceLanguage == 'es_PY') {
+	strings = require('./es-PY.json');
 }
 
 export default strings;
