@@ -85,9 +85,14 @@ export default class SubscriptionDetailsScreen extends Component {
 	}
 
 	alertCancelSubscription() {
+		let goodDate = "";
+        if(this.state.signature.good_cancel_date) {
+            goodDate = `${strings.cancel_good_date} ${this.state.signature.good_cancel_date}`;
+        }
+
 		Alert.alert(
 			strings.cancel_alert_title,
-			strings.cancel_alert + this.state.signature.good_cancel_date,
+			`${strings.cancel_alert} ${goodDate}`,
 			[
 				{
 					text: strings.no_tinny,
