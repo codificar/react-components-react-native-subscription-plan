@@ -1,17 +1,16 @@
 import {NativeModules, Platform} from 'react-native';
 
-let strings = '';
+let strings = require('./pt-BR.json')
 
 const deviceLanguage =
 	Platform.OS === 'ios'
 		? NativeModules.SettingsManager.settings.AppleLanguages[0]
 		: NativeModules.I18nManager.localeIdentifier;
 
-  if(deviceLanguage === 'pt_BR'){
-    strings = require('./pt_BR.json')
-  } else if (deviceLanguage === 'en_US') {
+
+  if (deviceLanguage === 'en_US' || deviceLanguage.includes('en')) {
     strings = require('./en.json');
-  } else if (deviceLanguage === 'es_PY' || deviceLanguage === 'es-PY') {
+  } else if (deviceLanguage === 'es_PY' || deviceLanguage.includes('es')) {
     strings = require('./es-PY.json');
   }
 
