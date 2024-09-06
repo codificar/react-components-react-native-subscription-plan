@@ -10,7 +10,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://git.codificar.com.br/react-components/react-native-subscription-plan"
+		"url": "git+https://github.com/codificar/react-components-react-native-subscription-plan"
 	},
 	"dependencies": {
 		"axios": "^0.19.2"
@@ -20,7 +20,7 @@
 	},
 	"author": "Codificar",
 	"bugs": {
-		"url": "https://git.codificar.com.br/react-components/react-native-subscription-plan/issues"
+		"url": "https://github.com/codificar/react-components-react-native-subscription-plan/issues"
 	},
-	"homepage": "https://git.codificar.com.br/react-components/react-native-subscription-plan#readme"
+	"homepage": "https://github.com/codificar/react-components-react-native-subscription-plan#readme"
 }
