@@ -84,7 +84,7 @@ export default class SubscriptionFinishScreen extends Component {
 			return;
 		}
 		this.setState({isLoadingCards: true});
-		listCards(this.route, this.provider.id, this.provider.token, this.routeAPI)
+		listCards(this.route, this.provider.id || this.provider._id, this.provider.token || this.provider._token, this.routeAPI)
 			.then((response) => {
 				const { data } = response;
 				if (data.success) {
@@ -185,8 +185,8 @@ export default class SubscriptionFinishScreen extends Component {
 		});
 		newSubscriptionPlan(
 			this.route,
-			this.provider.id,
-			this.provider.token,
+			this.provider.id || this.provider._id,
+			this.provider.token || this.provider._token,
 			this.state.charge_type,
 			this.state.item.id,
 			this.state.selectedCard,
@@ -360,9 +360,9 @@ export default class SubscriptionFinishScreen extends Component {
 								<TouchableOpacity
 									onPress={() =>
 										this.props.navigation.navigate('AddCardScreenLib', {
-											token: this.provider.token,
+											token: this.provider.token || this.provider._token,
 											type: "provider",
-											id: this.provider.id,
+											id: this.provider.id || this.provider._id,
 											color: this.themeColor,
 											appUrl: this.route,
 										})
