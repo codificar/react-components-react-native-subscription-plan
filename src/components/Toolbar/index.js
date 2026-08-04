@@ -1,101 +1,50 @@
-import React, { Component } from 'react';
-import { withNavigation } from 'react-navigation';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import {
-    View,
-    Dimensions,
-    TouchableOpacity,
-    StyleSheet,
-    Image
-} from 'react-native';
+import React from 'react';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Feather';
 
-const arrow = require('react-native-chat/src/img/left-arrow.png');
-const { width } = Dimensions.get('window');
-const statusbarHeight = getStatusBarHeight(true);
+// Padronizado para o padrao ScreenHeader do app: inset superior via
+// useSafeAreaInsets, linha de acoes de 56dp, alvo de toque de 48dp, icone
+// Feather arrow-left de 24dp a 16dp da borda, acessibilidade. Replicado
+// localmente porque a lib nao pode importar App/Components. Antes: seta
+// Image 30px + hack getStatusBarHeight, alvo 60x40, sem acessibilidade
+// (a prop handlePress dos chamadores era ignorada; o goBack vinha de
+// withNavigation internamente — comportamento preservado, so nao mais
+// ignora a prop).
+const ICON_SIZE = 24;
+const TOUCH_SIZE = 48;
+const EDGE = 16;
 
-class ToolBar extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-
-        }
-    }
-
-    handlePress() {
-        this.props.navigation.goBack();
-    }
-
-    render() {
-        return (
-            <View style={styles.principal2}>
-                <View style={{ height: 40 }}>
-                    <TouchableOpacity
-                        style={{ width: 60 }}
-                        onPress={() => this.handlePress()}
-                    >
-                        <Image
-                            style={styles.img}
-                            source={arrow}
-                        />
-                    </TouchableOpacity>
-                </View>
+export default function Toolbar({ handlePress, accessibilityLabel = 'Voltar' }) {
+    const insets = useSafeAreaInsets();
+    return (
+        <View style={{ paddingTop: insets.top }}>
+            <View style={styles.row}>
+                <TouchableOpacity
+                    style={styles.target}
+                    onPress={handlePress}
+                    accessibilityRole="button"
+                    accessibilityLabel={accessibilityLabel}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
+                    <Icon name="arrow-left" size={ICON_SIZE} color="#000000" />
+                </TouchableOpacity>
             </View>
-        );
-    }
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-    principal: {
-        width: width,
-        height: 90 + statusbarHeight,
-        position: "absolute",
-        top: 0,
-        paddingHorizontal: 25,
+    row: {
+        height: 56,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: EDGE - (TOUCH_SIZE - ICON_SIZE) / 2,
     },
-    principal2: {
-        height: 40,
-        width: "100%",
-        marginTop: 20 + statusbarHeight,
-        elevation: 1,
-        paddingHorizontal: 25,
-    },
-    iconPress: {
-        position: "absolute",
-        top: 10 + statusbarHeight,
-        left: 20,
+    target: {
+        width: TOUCH_SIZE,
+        height: TOUCH_SIZE,
         alignItems: 'center',
         justifyContent: 'center',
-        width: 55,
-        height: 55,
-
-
     },
-    areaImage: {
-        position: "absolute",
-        top: 10 + statusbarHeight,
-        left: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 55,
-        height: 55,
-        borderRadius: 45,
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 1,
-        shadowRadius: 5,
-        shadowColor: "#000",
-        elevation: 3,
-        overflow: "hidden",
-        backgroundColor: "#ffffff",
-        padding: 3,
-        borderColor: "#fff",
-        borderWidth: 4
-    },
-    img: {
-        height: 30,
-        width: 30
-    },
-
 });
-
-export default withNavigation(ToolBar);

@@ -15,6 +15,7 @@ import {
 	Alert,
 	ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckBox } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import * as parse from '../../Util/Parse';
@@ -293,7 +294,7 @@ export default class SubscriptionScreen extends Component {
 
 	render() {
 		return (
-			<View style={styles.parentContainer}>
+			<SafeAreaView style={styles.parentContainer} edges={['left', 'right', 'bottom']}>
 				<Toolbar
 					back={true}
 					handlePress={() => this.props.navigation.goBack()}
@@ -358,7 +359,7 @@ export default class SubscriptionScreen extends Component {
 						</TouchableOpacity>
 					</View>
 				</View>
-			</View >
+			</SafeAreaView>
 		);
 	}
 }

@@ -19,6 +19,7 @@ import {
 	Alert,
 	ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as constants from '../constants/index';
 import SubscriptionDetail from '../components/SubscriptionDetail';
 
@@ -190,7 +191,7 @@ export default class SubscriptionDetailsScreen extends Component {
 
 	render() {
 		return (
-			<View style={styles.parentContainer}>
+			<SafeAreaView style={styles.parentContainer} edges={['left', 'right', 'bottom']}>
 				<Toolbar
 					back={true}
 					handlePress={() => this.props.navigation.goBack()}
@@ -214,7 +215,7 @@ export default class SubscriptionDetailsScreen extends Component {
                         </Text>
                     </TouchableOpacity>
                 </View>
-			</View>
+			</SafeAreaView>
 		);
 	}
 }

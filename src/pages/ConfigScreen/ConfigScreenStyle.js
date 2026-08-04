@@ -8,7 +8,6 @@ export default StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#FBFBFB',
 		padding: 0,
-		marginTop: Platform.OS === 'android' ? 0 : 25,
 	},
 	avaliation: {
 		flexDirection: 'row',

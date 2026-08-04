@@ -19,6 +19,7 @@ import {
 	ActivityIndicator,
 	Dimensions
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as constants from '../constants/index';
 
 import { listCards, newSubscriptionPlan } from '../services/api';
@@ -314,7 +315,7 @@ export default class SubscriptionFinishScreen extends Component {
 
 	render() {
 		return (
-			<View style={styles.parentContainer}>
+			<SafeAreaView style={styles.parentContainer} edges={['left', 'right', 'bottom']}>
 				<Loader
 					loading={this.state.isLoading}
 					message={this.state.loading_message}
@@ -387,7 +388,7 @@ export default class SubscriptionFinishScreen extends Component {
 						</TouchableOpacity>
 					</View>
 				</View>
-			</View>
+			</SafeAreaView>
 		);
 	}
 }
